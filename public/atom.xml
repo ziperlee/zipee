@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://ziperlee.github.io/zipee.github.io/"/>
-  <updated>2018-11-04T13:45:50.108Z</updated>
+  <updated>2018-11-25T08:32:04.262Z</updated>
   <id>https://ziperlee.github.io/zipee.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>flask服务端推送</title>
+    <link href="https://ziperlee.github.io/zipee.github.io/2018/11/25/flask%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%8E%A8%E9%80%81/"/>
+    <id>https://ziperlee.github.io/zipee.github.io/2018/11/25/flask服务端推送/</id>
+    <published>2018-11-25T07:09:26.000Z</published>
+    <updated>2018-11-25T08:32:04.262Z</updated>
+    
+    <content type="html"><![CDATA[<div class="note info"><p>本文用以记录在<code>flask-sse</code>使用中踩到的坑及解决方案。</p></div><a id="more"></a><h3 id="当前主流的服务端推送方案"><a href="#当前主流的服务端推送方案" class="headerlink" title="当前主流的服务端推送方案"></a>当前主流的服务端推送方案</h3><ol><li>客户端短连接轮询</li><li>websocket</li><li>Server Send Event（SSE）</li></ol><p>相较于轮询的方式，websocket和sse会稍显高级而不是无脑的轮询浪费网络资源。<br>在最近一次的方案选型中，我选择了sse，理由是websocket是双工，且需要单独的服务，而项目的需求仅是向客户端进行简单的推送信息，对比之下sse更显轻量且开发量更少。</p><hr><h3 id="使用过程中遇到的困难"><a href="#使用过程中遇到的困难" class="headerlink" title="使用过程中遇到的困难"></a>使用过程中遇到的困难</h3><ul><li><p><strong><code>flask-sse</code> redis连接释放问题</strong><br>该库目前存在缺陷，当浏览器刷新或者网关断开重连时会重新<code>new EventSource</code>，然而服务端并无法得知连接的断开，导致redis连接数会一直增加。<br>唯一释放的机会在于当再次收到推送信息，协程被唤醒并产生<code>GeneratorExit</code>异常<br>因此代码中未对异常捕获，将错过最后一次释放reids连接的机会：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@stream_with_context</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generator</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">for</span> message <span class="keyword">in</span> self.messages(channel=channel):</span><br><span class="line">        <span class="keyword">yield</span> str(message)</span><br><span class="line">        self.redis.connection_pool.disconnect()</span><br></pre></td></tr></table></figure><p>  修改的代码已上传github，并提交merge，但是由于没有通过python2的测试用例导致未被合并（懒得适配），有兴趣的童鞋可以直接查看我fork提交的代码。</p><p>  <code>redis连接数查看</code></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli -a pwd -h *.*.*.* info | grep client</span><br></pre></td></tr></table></figure></li><li><p><strong>程序阻塞问题</strong><br>由于最开始使用之前未仔细看官方的实用说明和源码，发现uwsgi实用进程线程的启动模式，程序运行几次之后就阻塞了，最后发现正确的打开方式是使用协程的方式驱动http服务。</p><p>  另外还有一点现象，当使用flask自带的http服务器进行多线程<code>threaded=True</code>调试时redis连接能一次性释放掉，而当使用gunicorn+gevent方式运行时却没有一步到位的效果，原因是协程是异步的，一次<code>最多</code>能唤醒对应进程数量的协程，所以redis的释放问题最终还是需要通过定时推送心跳包的方式解决，推荐使用<code>celery</code>。</p></li><li><p><strong>网关超时问题</strong><br>网关基本都会有超时设置，而浏览器的断线重连貌似对于504的异常并不起作用。<br>  因此需要针对超时异常进行特殊处理。<br>  这里给出<a href="https://github.com/BotBotMe/botbot-web/issues/2" target="_blank" rel="noopener">nginx配置</a></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">location /eventsource &#123;</span><br><span class="line">include uwsgi_params;</span><br><span class="line">uwsgi_pass eventsource-botbot-backend;</span><br><span class="line">uwsgi_buffering off;</span><br><span class="line">chunked_transfer_encoding off;</span><br><span class="line">proxy_cache off;</span><br><span class="line">access_log  /var/log/nginx/eventsource_botbot.access.log;</span><br><span class="line">error_page 504 =200 @eventsource-close-graceful;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">location @eventsource-close-graceful &#123;</span><br><span class="line">add_header Content-Type text/event-stream;</span><br><span class="line">return 200;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>  <code>注意</code>每个nginx网关就需要配置</p></li></ul><hr><h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul><li><a href="https://github.com/singingwolfboy/flask-sse" target="_blank" rel="noopener">官方用例</a></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;div class=&quot;note info&quot;&gt;&lt;p&gt;本文用以记录在&lt;code&gt;flask-sse&lt;/code&gt;使用中踩到的坑及解决方案。&lt;/p&gt;&lt;/div&gt;
+    
+    </summary>
+    
+      <category term="flask" scheme="https://ziperlee.github.io/zipee.github.io/categories/flask/"/>
+    
+    
+      <category term="flask" scheme="https://ziperlee.github.io/zipee.github.io/tags/flask/"/>
+    
+      <category term="sse" scheme="https://ziperlee.github.io/zipee.github.io/tags/sse/"/>
+    
+  </entry>
   
   <entry>
     <title>win10docker使用填坑</title>
