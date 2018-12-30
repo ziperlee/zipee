@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="flask,sse," />
 
 
 
@@ -81,13 +81,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Zipee&#39;s blog">
-<meta property="og:url" content="https://ziperlee.github.io/zipee.github.io/index.html">
+<meta name="description" content="本文用以记录在flask-sse使用中踩到的坑及解决方案。">
+<meta name="keywords" content="flask,sse">
+<meta property="og:type" content="article">
+<meta property="og:title" content="flask服务端推送">
+<meta property="og:url" content="https://ziperlee.github.io/zipee.github.io/2018/11/25/flask服务端推送/index.html">
 <meta property="og:site_name" content="Zipee&#39;s blog">
+<meta property="og:description" content="本文用以记录在flask-sse使用中踩到的坑及解决方案。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-11-25T08:32:04.262Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Zipee&#39;s blog">
+<meta name="twitter:title" content="flask服务端推送">
+<meta name="twitter:description" content="本文用以记录在flask-sse使用中踩到的坑及解决方案。">
 
 
 
@@ -117,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="https://ziperlee.github.io/zipee.github.io/"/>
+  <link rel="canonical" href="https://ziperlee.github.io/zipee.github.io/2018/11/25/flask服务端推送/"/>
 
 
 
 
 
-  <title>Zipee's blog</title>
+  <title>flask服务端推送 | Zipee's blog</title>
   
 
 
@@ -142,8 +147,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -236,155 +240,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ziperlee.github.io/zipee.github.io/2018/12/30/python代码加密部署/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zipee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zipee's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/12/30/python代码加密部署/" itemprop="url">python代码pyc化加密部署</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-30T16:45:56+08:00">
-                2018-12-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <div class="note info"><p>python不像c，java等编译型语言（编译后发布机器码），解释型则必须把源码发布出去，但仍存在一些交付场景希望能够将python代码加密。</p></div>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/12/30/python代码加密部署/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    <div>
-      
-    </div>
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
 
   
 
@@ -414,9 +272,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/25/flask服务端推送/" itemprop="url">flask服务端推送</a></h1>
+          <h1 class="post-title" itemprop="name headline">flask服务端推送</h1>
         
 
         <div class="post-meta">
@@ -470,154 +326,13 @@
           
 
           
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <div class="note info"><p>本文用以记录在<code>flask-sse</code>使用中踩到的坑及解决方案。</p></div>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/11/25/flask服务端推送/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    <div>
-      
-    </div>
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ziperlee.github.io/zipee.github.io/2018/11/04/win10docker使用填坑/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zipee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zipee's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/04/win10docker使用填坑/" itemprop="url">win10docker使用填坑</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-04T13:17:09+08:00">
-                2018-11-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/docker/" itemprop="url" rel="index">
-                    <span itemprop="name">docker</span>
-                  </a>
-                </span>
-
-                
-                
-              
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
             </span>
           
 
           
-            
-          
-
-          
-          
-
-          
-
-          
 
           
 
@@ -634,38 +349,120 @@
       
 
       
-        
-          <div class="note info"><p>本文用以记录在<code>docker win10</code>环境使用中踩到的坑及解决方案。</p></div>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/11/04/win10docker使用填坑/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+        <div class="note info"><p>本文用以记录在<code>flask-sse</code>使用中踩到的坑及解决方案。</p></div>
+<a id="more"></a>
+<h3 id="当前主流的服务端推送方案"><a href="#当前主流的服务端推送方案" class="headerlink" title="当前主流的服务端推送方案"></a>当前主流的服务端推送方案</h3><ol>
+<li>客户端短连接轮询</li>
+<li>websocket</li>
+<li>Server Send Event（SSE）</li>
+</ol>
+<p>相较于轮询的方式，websocket和sse会稍显高级而不是无脑的轮询浪费网络资源。<br>在最近一次的方案选型中，我选择了sse，理由是websocket是双工，且需要单独的服务，而项目的需求仅是向客户端进行简单的推送信息，对比之下sse更显轻量且开发量更少。</p>
+<hr>
+<h3 id="使用过程中遇到的困难"><a href="#使用过程中遇到的困难" class="headerlink" title="使用过程中遇到的困难"></a>使用过程中遇到的困难</h3><ul>
+<li><p><strong><code>flask-sse</code> redis连接释放问题</strong><br>该库目前存在缺陷，当浏览器刷新或者网关断开重连时会重新<code>new EventSource</code>，然而服务端并无法得知连接的断开，导致redis连接数会一直增加。<br>唯一释放的机会在于当再次收到推送信息，协程被唤醒并产生<code>GeneratorExit</code>异常<br>因此代码中未对异常捕获，将错过最后一次释放reids连接的机会：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@stream_with_context</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generator</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">for</span> message <span class="keyword">in</span> self.messages(channel=channel):</span><br><span class="line">        <span class="keyword">yield</span> str(message)</span><br><span class="line">        self.redis.connection_pool.disconnect()</span><br></pre></td></tr></table></figure>
+<p>  修改的代码已上传github，并提交merge，但是由于没有通过python2的测试用例导致未被合并（懒得适配），有兴趣的童鞋可以直接查看我fork提交的代码。</p>
+<p>  <code>redis连接数查看</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli -a pwd -h *.*.*.* info | grep client</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>程序阻塞问题</strong><br>由于最开始使用之前未仔细看官方的实用说明和源码，发现uwsgi实用进程线程的启动模式，程序运行几次之后就阻塞了，最后发现正确的打开方式是使用协程的方式驱动http服务。</p>
+<p>  另外还有一点现象，当使用flask自带的http服务器进行多线程<code>threaded=True</code>调试时redis连接能一次性释放掉，而当使用gunicorn+gevent方式运行时却没有一步到位的效果，原因是协程是异步的，一次<code>最多</code>能唤醒对应进程数量的协程，所以redis的释放问题最终还是需要通过定时推送心跳包的方式解决，推荐使用<code>celery</code>。</p>
+</li>
+<li><p><strong>网关超时问题</strong><br>网关基本都会有超时设置，而浏览器的断线重连貌似对于504的异常并不起作用。<br>  因此需要针对超时异常进行特殊处理。<br>  这里给出<a href="https://github.com/BotBotMe/botbot-web/issues/2" target="_blank" rel="noopener">nginx配置</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">location /eventsource &#123;</span><br><span class="line">include uwsgi_params;</span><br><span class="line">uwsgi_pass eventsource-botbot-backend;</span><br><span class="line">uwsgi_buffering off;</span><br><span class="line">chunked_transfer_encoding off;</span><br><span class="line">proxy_cache off;</span><br><span class="line">access_log  /var/log/nginx/eventsource_botbot.access.log;</span><br><span class="line">error_page 504 =200 @eventsource-close-graceful;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">location @eventsource-close-graceful &#123;</span><br><span class="line">add_header Content-Type text/event-stream;</span><br><span class="line">return 200;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  <code>注意</code>每个nginx网关就需要配置</p>
+</li>
+</ul>
+<hr>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li><a href="https://github.com/singingwolfboy/flask-sse" target="_blank" rel="noopener">官方用例</a></li>
+</ul>
+
       
     </div>
     <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #555;font-size:14px;">-------------The End-------------</div>
+    
+</div>
       
     </div>
 
     
 
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Zipee 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Zipee 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
     
 
     
 
     <footer class="post-footer">
       
-
+        <div class="post-tags">
+          
+            <a href="/tags/flask/" rel="tag"># flask</a>
+          
+            <a href="/tags/sse/" rel="tag"># sse</a>
+          
+        </div>
       
 
       
+      
+      
 
       
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/04/win10docker使用填坑/" rel="next" title="win10docker使用填坑">
+                <i class="fa fa-chevron-left"></i> win10docker使用填坑
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/30/python代码加密部署/" rel="prev" title="python代码pyc化加密部署">
+                python代码pyc化加密部署 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
       
-        <div class="post-eof"></div>
+
+      
       
     </footer>
   </div>
@@ -675,10 +472,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -686,6 +484,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -706,8 +508,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -802,6 +613,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#当前主流的服务端推送方案"><span class="nav-number">1.</span> <span class="nav-text">当前主流的服务端推送方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用过程中遇到的困难"><span class="nav-number">2.</span> <span class="nav-text">使用过程中遇到的困难</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -950,6 +777,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
