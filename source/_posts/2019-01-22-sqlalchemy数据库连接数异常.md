@@ -8,16 +8,6 @@ categories:
 - 问题分析
 ---
 
-### 问题环境：
-{%note info%}
-- 使用flask搭建webserver的运行环境
-- 使用flask-sqlalchemy连接数据库并进行相关业务操作，SQLALCHEMY_POOL_SIZE = 64， SQLALCHEMY_POOL_RECYCLE = 30
-- mysql设置最大连接数200
-- 宿主机CPU 2核心
-- 通过进程数2*2+1 = 5
-{%endnote%}
-***
-
 ### 问题现象：
 {%note warning%}
 - web端调用flask接口阻塞，最终超时返回系统异常
@@ -25,6 +15,18 @@ categories:
 - 重新flask webserver后数据库连接数正常释放
 - 持续使用系统一段时间后数据库连接数再次封顶
 - 环境操作用户寥寥无几
+{%endnote%}
+
+
+<!--more-->
+***
+### 问题环境：
+{%note info%}
+- 使用flask搭建webserver的运行环境
+- 使用flask-sqlalchemy连接数据库并进行相关业务操作，SQLALCHEMY_POOL_SIZE = 64， SQLALCHEMY_POOL_RECYCLE = 30
+- mysql设置最大连接数200
+- 宿主机CPU 2核心
+- 通过进程数2*2+1 = 5
 {%endnote%}
 ***
 
