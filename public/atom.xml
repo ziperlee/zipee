@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://ziperlee.github.io/zipee.github.io/"/>
-  <updated>2019-05-04T04:05:29.038Z</updated>
+  <updated>2019-06-09T08:49:37.224Z</updated>
   <id>https://ziperlee.github.io/zipee.github.io/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>python程序员开发规范</title>
+    <link href="https://ziperlee.github.io/zipee.github.io/2019/06/09/python%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/"/>
+    <id>https://ziperlee.github.io/zipee.github.io/2019/06/09/python程序员开发规范/</id>
+    <published>2019-06-09T07:12:51.000Z</published>
+    <updated>2019-06-09T08:49:37.224Z</updated>
+    
+    <content type="html"><![CDATA[<div class="note info"><p>本文介绍两个python开发工具（flake8，black），并结合pycharm，pre-commit进行使用。</p></div><a id="more"></a><h2 id="flake8"><a href="#flake8" class="headerlink" title="flake8"></a>flake8</h2><ul><li>基于PEP8的静态代码检查工具。有助于约束团队使用统一的代码规范。</li><li>安装 <code>pip install flake8</code></li><li>指定文件检查 <code>flake8 path/code.py</code></li><li>指定目录检查 <code>flake8 path</code></li><li>忽略指定错误 <code>flake8 --ignore E24,W504 path</code></li><li>指定配置文件 <code>flake8 --config path1/.flake8 path2 （linux下默认查找用户目录）</code></li><li>代码指定行忽略检查 <code># noqa</code></li><li><a href="https://lintlyci.github.io/Flake8Rules/" target="_blank" rel="noopener">异常快速定位</a></li></ul><p><strong>配置文件模版</strong>：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[flake8]</span><br><span class="line">ignore =</span><br><span class="line">    E203 # whitespace before &apos;:&apos;</span><br><span class="line">    E741 # ambiguous variable name &apos;l&apos;</span><br><span class="line">filename =</span><br><span class="line">exclude =</span><br><span class="line">max-line-length = 89</span><br><span class="line">max-complexity = 10  # 指定代码最高复杂度</span><br></pre></td></tr></table></figure></p><p><strong>windows下配合pycharm使用</strong>：<br><code>File-&gt;Settings-&gt;Tools-&gt;External Tools-&gt;add</code><br><img src="https://i.loli.net/2019/06/09/5cfcc0aac588786191.png" alt="pycharm.flake8.png"></p><h2 id="black"><a href="#black" class="headerlink" title="black"></a>black</h2><ul><li>flake8经常会检查出代码格式上的异常，手动修改实在烦人，这时候推荐使用这款自动格式化代码神器，从此团队code review只需要关注代码业务逻辑</li><li>基本不需要自定义配置文件（虽然支持），相较于pylint需要各种自定义设置，black的极简哲学让我想到了iphone，”产品来告诉你你真正想要的”（产品决定需求）</li><li>安装 <code>pip install black</code></li><li>black –diff path/code.py <code>输出格式化差异</code></li><li>black path/code.py <code>自动格式代码</code>（简单暴力）</li></ul><p><strong>windows下配合pycharm使用</strong>：<br><code>File-&gt;Settings-&gt;Tools-&gt;External Tools-&gt;add</code><br><img src="https://i.loli.net/2019/06/09/5cfcc0aac58b837834.png" alt="pycharm.black.png"></p><h2 id="配合使用pre-commit"><a href="#配合使用pre-commit" class="headerlink" title="配合使用pre-commit"></a>配合使用pre-commit</h2><ul><li>安装 <code>pip install pre_commit</code></li><li>创建配置文件 <code>touch .pre-commit-config.yaml</code></li><li>初始化 <code>pre-commit install</code></li><li>垃圾回收 <code>pre-commit gc</code></li></ul><p><strong>配置模版</strong>：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">repos:</span><br><span class="line">-   repo: https://github.com/ambv/black</span><br><span class="line">    rev: stable</span><br><span class="line">    hooks:</span><br><span class="line">    - id: black</span><br><span class="line">      language_version: python3.6</span><br><span class="line">-   repo: https://github.com/pre-commit/pre-commit-hooks</span><br><span class="line">    rev: v2.2.3</span><br><span class="line">    hooks:</span><br><span class="line">    - id: flake8</span><br></pre></td></tr></table></figure></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;div class=&quot;note info&quot;&gt;&lt;p&gt;本文介绍两个python开发工具（flake8，black），并结合pycharm，pre-commit进行使用。&lt;/p&gt;&lt;/div&gt;
+    
+    </summary>
+    
+    
+      <category term="python" scheme="https://ziperlee.github.io/zipee.github.io/tags/python/"/>
+    
+  </entry>
   
   <entry>
     <title>pycharm远程调试</title>
@@ -88,9 +108,9 @@
       <category term="问题分析" scheme="https://ziperlee.github.io/zipee.github.io/categories/%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/"/>
     
     
-      <category term="问题分析" scheme="https://ziperlee.github.io/zipee.github.io/tags/%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/"/>
-    
       <category term="flask" scheme="https://ziperlee.github.io/zipee.github.io/tags/flask/"/>
+    
+      <category term="问题分析" scheme="https://ziperlee.github.io/zipee.github.io/tags/%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/"/>
     
       <category term="linux" scheme="https://ziperlee.github.io/zipee.github.io/tags/linux/"/>
     
