@@ -127,7 +127,7 @@ def _make_cache_key(args, kwargs, use_request):
 
     return cache_key
 
-```
+# ```
 
 - 默认情况下进入逻辑"elif "%s" in key_prefix:", 因此cached缓存只与requesturl相关，与视图函数的传参无关，`这里不太了解作者的实现意图，为什么不结合请求参数，且不太方便扩展或重写_make_cache_key`，若需要结合请求参数进行缓存，则就要对整个cached方便重写，存在大量冗余代码。具体的实现大概为通过flask.request.get_json()获取request_body，并结合业务对影响缓存的参数设置缓存。
 
