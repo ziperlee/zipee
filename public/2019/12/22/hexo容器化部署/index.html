@@ -90,7 +90,7 @@
 <meta property="og:description" content="hexo容器化部署，从此再无系统环境迁移的烦恼。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.loli.net/2019/12/22/4N2AI7PvGl9Ep1C.png">
-<meta property="og:updated_time" content="2019-12-25T14:01:12.000Z">
+<meta property="og:updated_time" content="2019-12-27T14:32:57.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hexo容器化部署">
 <meta name="twitter:description" content="hexo容器化部署，从此再无系统环境迁移的烦恼。">
@@ -361,6 +361,10 @@
 <li>使用指令如下：</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 编译镜像</span></span><br><span class="line">docker build -t blog .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行容器</span></span><br><span class="line">docker run -it -v your-code-path:/opt/hexo --name blog blog:latest</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入容器</span></span><br><span class="line">docker <span class="built_in">exec</span> -it blog bash</span><br><span class="line"></span><br><span class="line"><span class="comment"># hexo部署</span></span><br><span class="line">hexo d <span class="comment"># 注意需要配置git，亦可手动输入账号密码</span></span><br></pre></td></tr></table></figure>
+<h2 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h2><ul>
+<li>hexo在其他主机上的docker容器中<code>hexo d</code>部署失败（gitpage bulid failed），已比对发现是.deploy_git没有同步更新，手动删除并<code>hexo g -d</code>，成功修复</li>
+</ul>
+
       
     </div>
     <div>
@@ -435,8 +439,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/12/23/fabric使用总结/" rel="prev" title="fabric2222使用总结">
-                fabric2222使用总结 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/12/23/fabric使用总结/" rel="prev" title="fabric使用总结">
+                fabric使用总结 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -604,7 +608,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#改造过程"><span class="nav-number">2.</span> <span class="nav-text">改造过程</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#改造过程"><span class="nav-number">2.</span> <span class="nav-text">改造过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他问题"><span class="nav-number">3.</span> <span class="nav-text">其他问题</span></a></li></ol></div>
             
 
           </div>
