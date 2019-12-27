@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="兼职运维," />
 
 
 
@@ -81,13 +81,21 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Zipee&#39;s blog">
-<meta property="og:url" content="https://ziperlee.github.io/zipee.github.io/archives/2018/11/index.html">
+<meta name="description" content="今天部署生产环境遇到了坑，本文聊聊这个坑的上下文。">
+<meta name="keywords" content="兼职运维">
+<meta property="og:type" content="article">
+<meta property="og:title" content="兼职运维之ulimit">
+<meta property="og:url" content="https://ziperlee.github.io/zipee.github.io/2019/12/27/兼职运维之ulimit-u/index.html">
 <meta property="og:site_name" content="Zipee&#39;s blog">
+<meta property="og:description" content="今天部署生产环境遇到了坑，本文聊聊这个坑的上下文。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.loli.net/2019/12/27/tVroEwZsClS9b54.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/12/27/4rdolfctzh18ZCE.jpg">
+<meta property="og:updated_time" content="2019-12-27T13:45:27.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Zipee&#39;s blog">
+<meta name="twitter:title" content="兼职运维之ulimit">
+<meta name="twitter:description" content="今天部署生产环境遇到了坑，本文聊聊这个坑的上下文。">
+<meta name="twitter:image" content="https://i.loli.net/2019/12/27/tVroEwZsClS9b54.jpg">
 
 
 
@@ -117,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="https://ziperlee.github.io/zipee.github.io/archives/2018/11/"/>
+  <link rel="canonical" href="https://ziperlee.github.io/zipee.github.io/2019/12/27/兼职运维之ulimit-u/"/>
 
 
 
 
 
-  <title>归档 | Zipee's blog</title>
+  <title>兼职运维之ulimit | Zipee's blog</title>
   
 
 
@@ -142,7 +150,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -236,111 +244,234 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
-
-      <span class="archive-page-counter">
-        
-        
-        
-          
-        
-        嗯..! 目前共计 13 篇日志。 继续努力。
-      </span>
-
-      
-
-        
-        
-        
-
-        
-          
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
-
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ziperlee.github.io/zipee.github.io/2019/12/27/兼职运维之ulimit-u/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zipee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zipee's blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/11/25/flask服务端推送/" itemprop="url">
-              
-                <span itemprop="name">flask服务端推送</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">兼职运维之ulimit</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-11-25T15:09:26+08:00"
-              content="2018-11-25" >
-          11-25
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-27T21:09:45+08:00">
+                2019-12-27
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/11/04/win10docker使用填坑/" itemprop="url">
-              
-                <span itemprop="name">win10docker使用填坑</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-11-04T13:17:09+08:00"
-              content="2018-11-04" >
-          11-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
+      
+        <div class="note info"><p>今天部署生产环境遇到了坑，本文聊聊这个坑的上下文。</p></div>
+<a id="more"></a>
+<h2 id="现象-amp-定位"><a href="#现象-amp-定位" class="headerlink" title="现象&amp;定位"></a>现象&amp;定位</h2><ul>
+<li>部署完成后，收到测试人员反馈业务运行异常</li>
+<li><p>排查后，定位为livy向spark提交任务时执行失败<br>livy日志如下：<br><img src="https://i.loli.net/2019/12/27/tVroEwZsClS9b54.jpg" alt="spark异常.jpg"></p>
+</li>
+<li><p>初看有点懵，将关键字<code>spark</code>和<code>OpenBLAS blas_thread_init</code>提交google，结果大多匹配python运行时相关异常，<br><img src="https://i.loli.net/2019/12/27/4rdolfctzh18ZCE.jpg" alt="spark异常google.jpg"></p>
+</li>
+<li><p>仔细看不难发现<code>RLIMIT_NPROC 4096 current, 514476 max</code></p>
+</li>
+<li>由此自然联想到<code>ulimit -u</code>，一查发现果然只有4096</li>
+</ul>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><ul>
+<li>解决方案也简单，设置系统最大允许进程数</li>
+</ul>
+<p><strong>永久生效：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/etc/security/limits.d/90-nproc.conf</span><br><span class="line">或</span><br><span class="line">/etc/security/limits.conf</span><br><span class="line">在末行加入</span><br><span class="line">* hard nproc 1000000</span><br><span class="line">* soft nproc 1000000</span><br></pre></td></tr></table></figure>
+<p><strong>当前session生效：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ulimit -u 1000000</span><br></pre></td></tr></table></figure>
+<ul>
+<li>重新测试，问题果然修复</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>问题事后看并不复杂，但前前后后还是花了不少时间，其实之前ulimit也不是没学习过，但真正出现异常时，往往没有看透问题的本质</li>
+<li>该生产环境主机时刚部署的，毕竟兼职运维，像ulimit此类系统资源的设置没有统一的整体设置过，吃一堑长一智，兼职运维的路上且走且学吧</li>
+</ul>
+
+      
     </div>
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #555;font-size:14px;">-------------The End-------------</div>
+    
+</div>
+      
+    </div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Zipee 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Zipee 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/兼职运维/" rel="tag"># 兼职运维</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/23/fabric使用总结/" rel="next" title="fabric2222使用总结">
+                <i class="fa fa-chevron-left"></i> fabric2222使用总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -348,6 +479,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -368,8 +503,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -464,6 +608,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#现象-amp-定位"><span class="nav-number">1.</span> <span class="nav-text">现象&amp;定位</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方案"><span class="nav-number">2.</span> <span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -612,6 +772,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
