@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="部署,shell,运维," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Zipee's blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="从开始接触linux，或多或少会使用到shell，这篇文章用来整理下用过的shell语法，和比较常见的套路。">
+<meta name="keywords" content="部署,shell,运维">
+<meta property="og:type" content="article">
+<meta property="og:title" content="shell编码整理">
+<meta property="og:url" content="https://ziperlee.github.io/zipee.github.io/2020/01/13/shell编码整理/index.html">
+<meta property="og:site_name" content="Zipee&#39;s blog">
+<meta property="og:description" content="从开始接触linux，或多或少会使用到shell，这篇文章用来整理下用过的shell语法，和比较常见的套路。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-01-14T14:34:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="shell编码整理">
+<meta name="twitter:description" content="从开始接触linux，或多或少会使用到shell，这篇文章用来整理下用过的shell语法，和比较常见的套路。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ziperlee.github.io/zipee.github.io/2020/01/13/shell编码整理/"/>
+
+
+
+
+
+  <title>shell编码整理 | Zipee's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zipee's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ziperlee.github.io/zipee.github.io/2020/01/13/shell编码整理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zipee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zipee's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">shell编码整理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-13T21:54:44+08:00">
+                2020-01-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/shell/" itemprop="url" rel="index">
+                    <span itemprop="name">shell</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <div class="note info"><p>从开始接触linux，或多或少会使用到shell，这篇文章用来整理下用过的shell语法，和比较常见的套路。</p></div>
+<a id="more"></a>
+<h2 id="常用语法"><a href="#常用语法" class="headerlink" title="常用语法"></a>常用语法</h2><h3 id="test"><a href="#test" class="headerlink" title="test"></a>test</h3><ul>
+<li><p>用于检查某个条件是否成立，它可以进行数值、字符和文件三个方面的测试</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if test  -e startup.sh ;then </span><br><span class="line">等价于</span><br><span class="line">if [[ -e startup.sh ]];then</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>注意：可以使用[[]]就不要使用[]，[[]]兼容在命令中使用&amp;&amp;、||、&lt;和&gt; 等操作符</p>
+</li>
+</ul>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><ul>
+<li><p>定义数组</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">modules=(bond-web bifrost model-engine gaeaproxy)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取数组所有元素，@可被*替换</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span>&#123;modules[@]&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>遍历数组</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for module in "$&#123;modules[@]&#125;"; do</span><br><span class="line">echo $module</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>读取数组指定元素</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span>&#123;modules[index]&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>数组长度</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@可被*替换|$&#123;#my_array[@]&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><ul>
+<li><p>全局变量</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 全局变量的作用域是当前的进程，而不是前端的shell脚本文件</span><br><span class="line">a=1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>局部变量</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">local a=1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>环境变量</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export a=1</span><br><span class="line">作用域为当前shell进程和其子进程</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>特殊变量</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">示例</th>
+<th style="text-align:left">变量含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">$@</td>
+<td style="text-align:left">所有入参，可以通过set设置 set 11 22 33 44</td>
+</tr>
+<tr>
+<td style="text-align:center">$#</td>
+<td style="text-align:left">参数个数</td>
+</tr>
+<tr>
+<td style="text-align:center">$?</td>
+<td style="text-align:left">上个命令的退出状态</td>
+<td>函数的返回值</td>
+</tr>
+<tr>
+<td style="text-align:center">$$</td>
+<td style="text-align:left">当前shell进程的ID</td>
+</tr>
+<tr>
+<td style="text-align:center">$!</td>
+<td style="text-align:left">Shell最后运行的后台Process的PID</td>
+</tr>
+<tr>
+<td style="text-align:center">total=$#｜action=${!total}</td>
+<td style="text-align:left">获取最后一个参数，也可通过eval action=\$$#</td>
+</tr>
+</tbody>
+</table>
+<p>｜` `｜指令定义，相较于’’，<code></code>会预执行，在指令嵌套时经常用到｜<br>｜echo $aa | echo ${aa}｜读取变量｜<br>｜$((2+3)) ｜进行整数运算｜</p>
+<h3 id="eval"><a href="#eval" class="headerlink" title="eval"></a>eval</h3><ul>
+<li>该命令对变量进行两次扫描<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a=`echo hello`</span><br><span class="line">b='echo $a' </span><br><span class="line">等价于</span><br><span class="line">a='echo hello'</span><br><span class="line">b=eval 'echo $a'</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="引号"><a href="#引号" class="headerlink" title="引号"></a>引号</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">示例</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">‘ ‘ 单引号</td>
+<td style="text-align:left">剥夺所有字符的特殊含义，如 n=3；echo ‘$n’ -&gt; $n</td>
+</tr>
+<tr>
+<td style="text-align:center">“ “ 双引号</td>
+<td style="text-align:left">引号内可参数替换，$和反引号 <code></code></td>
+</tr>
+<tr>
+<td style="text-align:center"><code></code>反引号</td>
+<td style="text-align:left">用命令替换，即先执行<code></code>内命令，将输出结果暂存，在适当的地方输出</td>
+</tr>
+</tbody>
+</table>
+<h3 id="重定向"><a href="#重定向" class="headerlink" title="重定向"></a>重定向</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ehco 'haha' &gt; /tmp/tmp.log 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+<h2 id="常见的服务启动脚本"><a href="#常见的服务启动脚本" class="headerlink" title="常见的服务启动脚本"></a>常见的服务启动脚本</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line"></span><br><span class="line">eval action=\$$#</span><br><span class="line"></span><br><span class="line">main() &#123;</span><br><span class="line">    case "$module" in</span><br><span class="line">        module1)</span><br><span class="line">            start_cmd="cmd1"</span><br><span class="line">            ;;</span><br><span class="line">        module2)</span><br><span class="line">            start_cmd="cmd2"</span><br><span class="line">            ;;</span><br><span class="line">        *)</span><br><span class="line">            echo "usage: $module &#123;module1|module2&#125;"</span><br><span class="line">            exit -1</span><br><span class="line">    esac</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">all() &#123;</span><br><span class="line">	  for module in "$&#123;modules[@]&#125;"; do</span><br><span class="line">	      main</span><br><span class="line">	      echo</span><br><span class="line">        echo "[INFO] $module:"</span><br><span class="line">            echo "[INFO] processing: $&#123;module&#125; $&#123;action&#125;"</span><br><span class="line">            echo "=================="</span><br><span class="line">            action</span><br><span class="line">            echo "--------------"</span><br><span class="line">    done</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">action() &#123;</span><br><span class="line">	case "$action" in</span><br><span class="line">		start)</span><br><span class="line">			start</span><br><span class="line">			status</span><br><span class="line">			;;</span><br><span class="line">		stop)</span><br><span class="line">			stop</span><br><span class="line">			;;</span><br><span class="line">		status)</span><br><span class="line">			status</span><br><span class="line">			;;</span><br><span class="line">		restart)</span><br><span class="line">			stop</span><br><span class="line">			start</span><br><span class="line">			status</span><br><span class="line">			;;</span><br><span class="line">		*)</span><br><span class="line">			echo "usage: $action &#123;start|stop|status|restart&#125;"</span><br><span class="line">			exit -1</span><br><span class="line">	esac</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">usage() &#123;</span><br><span class="line">    echo "usage: $0 &#123;all|[module1, ...]&#125; &#123;start|stop|status|restart&#125;"</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">multiple() &#123;</span><br><span class="line">    total=$#</span><br><span class="line">    action=$&#123;!total&#125;</span><br><span class="line">    for (( i=1; i&lt;total; i++)); do</span><br><span class="line">        module=$&#123;!i//\//&#125;</span><br><span class="line">        main</span><br><span class="line">	     echo "[INFO] $module:$&#123;start_cmd&#125;"</span><br><span class="line">        echo "[INFO] processing: $&#123;module&#125; $&#123;action&#125;"</span><br><span class="line">        echo "=================="</span><br><span class="line">        action</span><br><span class="line">        echo "--------------"</span><br><span class="line">    done</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">getpid() &#123;</span><br><span class="line">    if [ ! -d "pids" ]; then</span><br><span class="line">        mkdir pids</span><br><span class="line">    fi</span><br><span class="line">    if [ ! -f "pids/$&#123;module&#125;_pid" ];then</span><br><span class="line">        echo "" &gt; pids/$&#123;module&#125;_pid</span><br><span class="line">    fi</span><br><span class="line">    module_pid=`cat pids/$&#123;module&#125;_pid`</span><br><span class="line"></span><br><span class="line">    pid=`ps aux | grep $&#123;module_pid&#125; | grep -v grep | grep -v $0 | awk '&#123;print $2&#125;'`</span><br><span class="line"></span><br><span class="line">    if [[ -n $&#123;pid&#125; ]]; then</span><br><span class="line">        return 0</span><br><span class="line">    else</span><br><span class="line">        return 1</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">status() &#123;</span><br><span class="line">    getpid</span><br><span class="line">    if [[ -n $&#123;pid&#125; ]]; then</span><br><span class="line">        echo "status:</span><br><span class="line">        `ps aux | grep $&#123;pid&#125; | grep -v grep`"</span><br><span class="line">        return 0</span><br><span class="line">    else</span><br><span class="line">        echo "service not running"</span><br><span class="line">        return 1</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">start() &#123;</span><br><span class="line">    getpid</span><br><span class="line">    if [[ $? -eq 1 ]]; then</span><br><span class="line">        eval $start_cmd</span><br><span class="line">        echo $!&gt;pids/$&#123;module&#125;_pid</span><br><span class="line">        getpid</span><br><span class="line">        if [[ $? -eq 0 ]]; then</span><br><span class="line">            echo "service start sucessfully. pid: $&#123;pid&#125;"</span><br><span class="line">        else</span><br><span class="line">            echo "service start failed"</span><br><span class="line">        fi</span><br><span class="line">    else</span><br><span class="line">        echo "service already started. pid: $&#123;pid&#125;"</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">stop() &#123;</span><br><span class="line">    getpid</span><br><span class="line">    if [[ -n $&#123;pid&#125; ]]; then</span><br><span class="line">        echo "killing:</span><br><span class="line">        `ps aux | grep $&#123;pid&#125; | grep -v grep`"</span><br><span class="line">        kill -9 $&#123;pid&#125; &amp;&amp; sleep 0.01</span><br><span class="line">		    getpid</span><br><span class="line">        if [[ $? -eq 1 ]]; then</span><br><span class="line">            echo "killed"</span><br><span class="line">        else</span><br><span class="line">            echo "kill error"</span><br><span class="line">        fi</span><br><span class="line">    else</span><br><span class="line">        echo "service not running"</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">case "$1" in</span><br><span class="line">    all)</span><br><span class="line">        all $@</span><br><span class="line">        ;;</span><br><span class="line">    usage)</span><br><span class="line">        usage</span><br><span class="line">        ;;</span><br><span class="line">    *)</span><br><span class="line">        multiple $@</span><br><span class="line">        ;;</span><br><span class="line">esac</span><br></pre></td></tr></table></figure>
+<ul>
+<li>注意服务启动间隔如果不加<code>sleep 0.01</code>，可能会导致获取服务状态异常，即杀掉服务需要一定的信号处理时间</li>
+</ul>
+<h2 id="开机启动"><a href="#开机启动" class="headerlink" title="开机启动"></a>开机启动</h2><ul>
+<li>将启动指令配置进/etc/rc.d/rc.local</li>
+<li>注意，任何一个脚本执行失败，即exit非0，将导致该shell session内的所有启动服务失败，而如何配置在rc.local中的指令exit非0，将导致整个系统初始化失败</li>
+</ul>
+
+      
+    </div>
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #555;font-size:14px;">-------------The End-------------</div>
+    
+</div>
+      
+    </div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Zipee 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Zipee 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/部署/" rel="tag"># 部署</a>
+          
+            <a href="/tags/shell/" rel="tag"># shell</a>
+          
+            <a href="/tags/运维/" rel="tag"># 运维</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/27/兼职运维之ulimit-u/" rel="next" title="兼职运维之ulimit">
+                <i class="fa fa-chevron-left"></i> 兼职运维之ulimit
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpeg"
+                alt="Zipee" />
+            
+              <p class="site-author-name" itemprop="name">Zipee</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ziperlee" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com/ziperlee" title="github" target="_blank">github</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用语法"><span class="nav-number">1.</span> <span class="nav-text">常用语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#test"><span class="nav-number">1.1.</span> <span class="nav-text">test</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数组"><span class="nav-number">1.2.</span> <span class="nav-text">数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变量"><span class="nav-number">1.3.</span> <span class="nav-text">变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#eval"><span class="nav-number">1.4.</span> <span class="nav-text">eval</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引号"><span class="nav-number">1.5.</span> <span class="nav-text">引号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重定向"><span class="nav-number">1.6.</span> <span class="nav-text">重定向</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见的服务启动脚本"><span class="nav-number">2.</span> <span class="nav-text">常见的服务启动脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开机启动"><span class="nav-number">3.</span> <span class="nav-text">开机启动</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zipee</span>
+
+  
+</div>
+
+
+  <div class="powered-by"></div>
+
+
+
+  
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a></div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
