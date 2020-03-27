@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="docker,wins10," />
+  <meta name="keywords" content="pysqark,pandas," />
 
 
 
@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="本文用以记录在docker win10环境使用中踩到的坑及解决方案。">
-<meta name="keywords" content="docker,wins10">
+<meta name="description" content="pyspark.dataframe与pandas.dataframe大概目前机器学习算子中最长用到的数据结构了，本文来讲讲各自的常用操作和两者间相互转换。">
+<meta name="keywords" content="pysqark,pandas">
 <meta property="og:type" content="article">
-<meta property="og:title" content="win10docker使用填坑">
-<meta property="og:url" content="https://ziperlee.github.io/zipee.github.io/2018/11/04/win10docker使用填坑/index.html">
+<meta property="og:title" content="关于pyspark-dataframe与pandas-dataframe的那些事">
+<meta property="og:url" content="https://ziperlee.github.io/zipee.github.io/2020/03/27/关于pyspark-dataframe与pandas-dataframe的那些事/index.html">
 <meta property="og:site_name" content="Zipee&#39;s blog">
-<meta property="og:description" content="本文用以记录在docker win10环境使用中踩到的坑及解决方案。">
+<meta property="og:description" content="pyspark.dataframe与pandas.dataframe大概目前机器学习算子中最长用到的数据结构了，本文来讲讲各自的常用操作和两者间相互转换。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-12-28T11:34:43.000Z">
+<meta property="og:updated_time" content="2020-03-27T15:01:21.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="win10docker使用填坑">
-<meta name="twitter:description" content="本文用以记录在docker win10环境使用中踩到的坑及解决方案。">
+<meta name="twitter:title" content="关于pyspark-dataframe与pandas-dataframe的那些事">
+<meta name="twitter:description" content="pyspark.dataframe与pandas.dataframe大概目前机器学习算子中最长用到的数据结构了，本文来讲讲各自的常用操作和两者间相互转换。">
 
 
 
@@ -122,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="https://ziperlee.github.io/zipee.github.io/2018/11/04/win10docker使用填坑/"/>
+  <link rel="canonical" href="https://ziperlee.github.io/zipee.github.io/2020/03/27/关于pyspark-dataframe与pandas-dataframe的那些事/"/>
 
 
 
 
 
-  <title>win10docker使用填坑 | Zipee's blog</title>
+  <title>关于pyspark-dataframe与pandas-dataframe的那些事 | Zipee's blog</title>
   
 
 
@@ -255,7 +255,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ziperlee.github.io/zipee.github.io/2018/11/04/win10docker使用填坑/">
+    <link itemprop="mainEntityOfPage" href="https://ziperlee.github.io/zipee.github.io/2020/03/27/关于pyspark-dataframe与pandas-dataframe的那些事/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zipee">
@@ -272,7 +272,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">win10docker使用填坑</h1>
+          <h1 class="post-title" itemprop="name headline">关于pyspark-dataframe与pandas-dataframe的那些事</h1>
         
 
         <div class="post-meta">
@@ -284,8 +284,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-04T13:17:09+08:00">
-                2018-11-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-27T21:31:17+08:00">
+                2020-03-27
               </time>
             
 
@@ -307,8 +307,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/docker/" itemprop="url" rel="index">
-                    <span itemprop="name">docker</span>
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
                   </a>
                 </span>
 
@@ -349,25 +349,59 @@
       
 
       
-        <div class="note info"><p>本文用以记录在<code>docker win10</code>环境使用中踩到的坑及解决方案。</p></div>
+        <div class="note info"><p>pyspark.dataframe与pandas.dataframe大概目前机器学习算子中最长用到的数据结构了，本文来讲讲各自的常用操作和两者间相互转换。</p></div>
 <a id="more"></a>
-<h2 id="问题一：docker修改配置或者镜像的存储位置后启动异常"><a href="#问题一：docker修改配置或者镜像的存储位置后启动异常" class="headerlink" title="问题一：docker修改配置或者镜像的存储位置后启动异常"></a>问题一：docker修改配置或者镜像的存储位置后启动异常</h2><h3 id="解决方案："><a href="#解决方案：" class="headerlink" title="解决方案："></a><em>解决方案</em>：</h3><div class="note warning"><ul>
-<li>移动|剪切 C:\Users\Public\Documents\Hyper-V\Virtual hard disks\MobyLinuxVM.vhdx 再重启电脑</li>
-</ul></div>
-<hr>
-<h2 id="问题二：修改镜像存储位置"><a href="#问题二：修改镜像存储位置" class="headerlink" title="问题二：修改镜像存储位置"></a>问题二：修改镜像存储位置</h2><h3 id="解决方案：-1"><a href="#解决方案：-1" class="headerlink" title="解决方案："></a><em>解决方案</em>：</h3><div class="note warning"><ul>
-<li>默认位置：C:\Users\Public\Documents\Hyper-V\Virtual hard disks\MobyLinuxVM.vhdx</li>
-<li>修改：Hyper-V管理器<strong>Hyper-v设置</strong>虚拟硬盘修改路径</li>
-</ul></div>
-<hr>
-<h2 id="问题三：docker安装mysql8-0容器后，是用navicat连接报client-does-not-support-authentication-protocol-requested-by-server-consider-upgrading-mysql-client"><a href="#问题三：docker安装mysql8-0容器后，是用navicat连接报client-does-not-support-authentication-protocol-requested-by-server-consider-upgrading-mysql-client" class="headerlink" title="问题三：docker安装mysql8.0容器后，是用navicat连接报client does not support authentication protocol requested by server consider upgrading mysql client"></a>问题三：docker安装mysql8.0容器后，是用navicat连接报client does not support authentication protocol requested by server consider upgrading mysql client</h2><h3 id="解决方案：-2"><a href="#解决方案：-2" class="headerlink" title="解决方案："></a><em>解决方案</em>：</h3><div class="note warning"><ul>
-<li>进入容器<br>docker exec -it mysql bash</li>
-<li>进入mysql<br>mysql -u root -p</li>
-<li>创建root用户<br>CREATE USER ‘root‘@’%’ IDENTIFIED IDENTIFIED WITH <code>mysql_native_password</code> BY ‘123456’;</li>
-<li>设置root用户访问权限<br>GRANT ALL PRIVILEGES ON <em>.</em> TO ‘root‘@’%’ WITH GRANT OPTION;</li>
-<li>重置密码<br>ALTER USER ‘root‘@’%’ IDENTIFIED WITH <code>mysql_native_password</code> BY ‘123456’;<br>ALTER USER ‘root‘@’localhost’ IDENTIFIED WITH <code>mysql_native_password</code> BY ‘123456’;</li>
-<li>提交修改<br>FLUSH PRIVILEGES;</li>
-</ul></div>
+<h2 id="pyspark"><a href="#pyspark" class="headerlink" title="pyspark"></a>pyspark</h2><ul>
+<li>创建spark-session</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> SparkSession</span><br><span class="line">session = (</span><br><span class="line">    SparkSession.builder.appName(<span class="string">"spark_pyspark"</span>)</span><br><span class="line">        .config(<span class="string">"hive.metastore.uris"</span>, <span class="string">"thrift://ip:9083"</span>)</span><br><span class="line">        .config(<span class="string">"spark.sql.warehouse.dir"</span>, <span class="string">"/user/hive/warehouse"</span>)</span><br><span class="line">        .enableHiveSupport()</span><br><span class="line">        .getOrCreate()</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>通过pyspark-sql进行数据查询、聚合、统计</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df = session.sql(<span class="string">"select * from table_name"</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>dataframe数据落地保存</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 类似的常用的方法还有saveAsPickleFile</span><br><span class="line">df.rdd.saveAsTextFile(<span class="string">'/tmp/text_file'</span>)</span><br><span class="line"></span><br><span class="line">// 通过spark-sql</span><br><span class="line">df.write.saveAsTable(output_table, <span class="keyword">None</span>, <span class="string">"overwrite"</span>, <span class="keyword">None</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>重新读取落地的文件</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// p类型为list</span><br><span class="line">p = session.sparkContext.pickleFile(<span class="string">'/tmp/pickle_file/part-00000'</span>).collect()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>重新回到dataframe</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df = session.createDataFrame(p)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>datafram实例化</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">// csv to dataframe</span><br><span class="line">// schema数据类型为 `<span class="keyword">from</span> pyspark.sql.types <span class="keyword">import</span> *`</span><br><span class="line">df = (</span><br><span class="line">    self.session.read.format(<span class="string">"com.databricks.spark.csv"</span>)</span><br><span class="line">    .options(</span><br><span class="line">        header=<span class="keyword">True</span>,</span><br><span class="line">        schema=schema,</span><br><span class="line">        encoding=encoding,</span><br><span class="line">        delimiter=col_delimiter,</span><br><span class="line">    )</span><br><span class="line">    .load(uri) // uri 可以指定hdfs文件或者本地文件</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">// mysql to dataframe</span><br><span class="line">df = (</span><br><span class="line">    self.session.read.format(<span class="string">"jdbc"</span>)</span><br><span class="line">    .options(</span><br><span class="line">        url=url,</span><br><span class="line">        driver=<span class="string">"com.mysql.jdbc.Driver"</span>,</span><br><span class="line">        dbtable=db_table_name,</span><br><span class="line">        user=user_name,</span><br><span class="line">        password=password,</span><br><span class="line">    )</span><br><span class="line">    .load()</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>pyspark.dataframe to pandas.dataframe</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pdf = df.toPandas()</span><br></pre></td></tr></table></figure>
+<h2 id="pandas"><a href="#pandas" class="headerlink" title="pandas"></a>pandas</h2><ul>
+<li>pandas.dataframe 实例化</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">// csv to pdf</span><br><span class="line">pdf = pd.read_csv(file_path)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>dataframe to csv</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pdf.to_csv(file_path, index=<span class="keyword">False</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>pandas.dataframe to pyspark.dataframe</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// session的声明方式见上文</span><br><span class="line">df = session.createDataFrame(pdf)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>pdf to string</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s = pdf.to_string()</span><br></pre></td></tr></table></figure>
+<h2 id="复杂问题"><a href="#复杂问题" class="headerlink" title="复杂问题"></a>复杂问题</h2><h3 id="spark-dataframe如何实现多机同步"><a href="#spark-dataframe如何实现多机同步" class="headerlink" title="spark.dataframe如何实现多机同步"></a>spark.dataframe如何实现多机同步</h3><p>正常情况下通过<code>df.write</code>落hdfs(上层可能基于hive或者spark-sql)实现共享。<br>但若要跨集群共享就要另想办法了。<br>解决方案就是将落地数据单独传输：</p>
+<p>1、df -&gt; hdfs -&gt; local file -&gt; internet<br>2、df -&gt; pdf -&gt; byte or string -&gt; internet<br>显然第二种方法只需要落地一次，更优</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># spark df to pandas df</span></span><br><span class="line">pdf = df.toPandas()</span><br><span class="line"></span><br><span class="line"><span class="comment"># pandas df to string</span></span><br><span class="line">s = pdf.to_string()</span><br><span class="line"></span><br><span class="line"><span class="comment"># string to bytes</span></span><br><span class="line">b = str.encode(s)</span><br><span class="line"></span><br><span class="line"><span class="comment"># send</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># bytes to pandas df</span></span><br><span class="line"><span class="keyword">from</span> io <span class="keyword">import</span> StringIO</span><br><span class="line">s = str(bytes_data,<span class="string">'utf-8'</span>)</span><br><span class="line">// sep 必须要指定，非则将结构混乱</span><br><span class="line">df = pd.read_csv(StringIO(s), sep=<span class="string">"\s+"</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="pandas-dataframe数据精度问题"><a href="#pandas-dataframe数据精度问题" class="headerlink" title="pandas.dataframe数据精度问题"></a>pandas.dataframe数据精度问题</h3><p>当pandas.dataframe to_csv或者转为pysprk.dataframe时，会默认进行精度转换，<br>to_csv中提供了指定精度的参数，然而每列特征的精度本就可能不一致，所以最好还是完整保留当前的数据内容。<br>解决方案：<br>1、通过float_format指定最长有效数字，<code>g</code>不补零，<code>f</code>补零</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pdf.to_csv(file_path, index=<span class="keyword">False</span>, float_format=<span class="string">"%.10g"</span>)</span><br></pre></td></tr></table></figure>
+<p>2、使用<code>pdf.to_string</code>的方式，保存数据快照，然后手动进行数据转换为csv。</p>
+
       
     </div>
     <div>
@@ -419,9 +453,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/docker/" rel="tag"># docker</a>
+            <a href="/tags/pysqark/" rel="tag"># pysqark</a>
           
-            <a href="/tags/wins10/" rel="tag"># wins10</a>
+            <a href="/tags/pandas/" rel="tag"># pandas</a>
           
         </div>
       
@@ -434,15 +468,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2019/12/27/兼职运维之ulimit-u/" rel="next" title="兼职运维之ulimit">
+                <i class="fa fa-chevron-left"></i> 兼职运维之ulimit
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/11/25/flask服务端推送/" rel="prev" title="flask服务端推送">
-                flask服务端推送 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -609,7 +643,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题一：docker修改配置或者镜像的存储位置后启动异常"><span class="nav-number">1.</span> <span class="nav-text">问题一：docker修改配置或者镜像的存储位置后启动异常</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方案："><span class="nav-number">1.1.</span> <span class="nav-text">解决方案：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题二：修改镜像存储位置"><span class="nav-number">2.</span> <span class="nav-text">问题二：修改镜像存储位置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方案：-1"><span class="nav-number">2.1.</span> <span class="nav-text">解决方案：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题三：docker安装mysql8-0容器后，是用navicat连接报client-does-not-support-authentication-protocol-requested-by-server-consider-upgrading-mysql-client"><span class="nav-number">3.</span> <span class="nav-text">问题三：docker安装mysql8.0容器后，是用navicat连接报client does not support authentication protocol requested by server consider upgrading mysql client</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方案：-2"><span class="nav-number">3.1.</span> <span class="nav-text">解决方案：</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#pyspark"><span class="nav-number">1.</span> <span class="nav-text">pyspark</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pandas"><span class="nav-number">2.</span> <span class="nav-text">pandas</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复杂问题"><span class="nav-number">3.</span> <span class="nav-text">复杂问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#spark-dataframe如何实现多机同步"><span class="nav-number">3.1.</span> <span class="nav-text">spark.dataframe如何实现多机同步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pandas-dataframe数据精度问题"><span class="nav-number">3.2.</span> <span class="nav-text">pandas.dataframe数据精度问题</span></a></li></ol></li></ol></div>
             
 
           </div>
