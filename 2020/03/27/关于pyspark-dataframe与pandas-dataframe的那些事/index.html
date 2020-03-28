@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="pysqark,pandas," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Zipee's blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="pyspark.dataframe与pandas.dataframe大概目前机器学习算子中最长用到的数据结构了，本文来讲讲各自的常用操作和两者间相互转换。">
+<meta name="keywords" content="pysqark,pandas">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于pyspark-dataframe与pandas-dataframe的那些事">
+<meta property="og:url" content="https://ziperlee.github.io/zipee.github.io/2020/03/27/关于pyspark-dataframe与pandas-dataframe的那些事/index.html">
+<meta property="og:site_name" content="Zipee&#39;s blog">
+<meta property="og:description" content="pyspark.dataframe与pandas.dataframe大概目前机器学习算子中最长用到的数据结构了，本文来讲讲各自的常用操作和两者间相互转换。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-03-27T15:01:21.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于pyspark-dataframe与pandas-dataframe的那些事">
+<meta name="twitter:description" content="pyspark.dataframe与pandas.dataframe大概目前机器学习算子中最长用到的数据结构了，本文来讲讲各自的常用操作和两者间相互转换。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ziperlee.github.io/zipee.github.io/2020/03/27/关于pyspark-dataframe与pandas-dataframe的那些事/"/>
+
+
+
+
+
+  <title>关于pyspark-dataframe与pandas-dataframe的那些事 | Zipee's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zipee's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ziperlee.github.io/zipee.github.io/2020/03/27/关于pyspark-dataframe与pandas-dataframe的那些事/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zipee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zipee's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">关于pyspark-dataframe与pandas-dataframe的那些事</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-27T21:31:17+08:00">
+                2020-03-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <div class="note info"><p>pyspark.dataframe与pandas.dataframe大概目前机器学习算子中最长用到的数据结构了，本文来讲讲各自的常用操作和两者间相互转换。</p></div>
+<a id="more"></a>
+<h2 id="pyspark"><a href="#pyspark" class="headerlink" title="pyspark"></a>pyspark</h2><ul>
+<li>创建spark-session</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> SparkSession</span><br><span class="line">session = (</span><br><span class="line">    SparkSession.builder.appName(<span class="string">"spark_pyspark"</span>)</span><br><span class="line">        .config(<span class="string">"hive.metastore.uris"</span>, <span class="string">"thrift://ip:9083"</span>)</span><br><span class="line">        .config(<span class="string">"spark.sql.warehouse.dir"</span>, <span class="string">"/user/hive/warehouse"</span>)</span><br><span class="line">        .enableHiveSupport()</span><br><span class="line">        .getOrCreate()</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>通过pyspark-sql进行数据查询、聚合、统计</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df = session.sql(<span class="string">"select * from table_name"</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>dataframe数据落地保存</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 类似的常用的方法还有saveAsPickleFile</span><br><span class="line">df.rdd.saveAsTextFile(<span class="string">'/tmp/text_file'</span>)</span><br><span class="line"></span><br><span class="line">// 通过spark-sql</span><br><span class="line">df.write.saveAsTable(output_table, <span class="keyword">None</span>, <span class="string">"overwrite"</span>, <span class="keyword">None</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>重新读取落地的文件</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// p类型为list</span><br><span class="line">p = session.sparkContext.pickleFile(<span class="string">'/tmp/pickle_file/part-00000'</span>).collect()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>重新回到dataframe</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df = session.createDataFrame(p)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>datafram实例化</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">// csv to dataframe</span><br><span class="line">// schema数据类型为 `<span class="keyword">from</span> pyspark.sql.types <span class="keyword">import</span> *`</span><br><span class="line">df = (</span><br><span class="line">    self.session.read.format(<span class="string">"com.databricks.spark.csv"</span>)</span><br><span class="line">    .options(</span><br><span class="line">        header=<span class="keyword">True</span>,</span><br><span class="line">        schema=schema,</span><br><span class="line">        encoding=encoding,</span><br><span class="line">        delimiter=col_delimiter,</span><br><span class="line">    )</span><br><span class="line">    .load(uri) // uri 可以指定hdfs文件或者本地文件</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">// mysql to dataframe</span><br><span class="line">df = (</span><br><span class="line">    self.session.read.format(<span class="string">"jdbc"</span>)</span><br><span class="line">    .options(</span><br><span class="line">        url=url,</span><br><span class="line">        driver=<span class="string">"com.mysql.jdbc.Driver"</span>,</span><br><span class="line">        dbtable=db_table_name,</span><br><span class="line">        user=user_name,</span><br><span class="line">        password=password,</span><br><span class="line">    )</span><br><span class="line">    .load()</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>pyspark.dataframe to pandas.dataframe</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pdf = df.toPandas()</span><br></pre></td></tr></table></figure>
+<h2 id="pandas"><a href="#pandas" class="headerlink" title="pandas"></a>pandas</h2><ul>
+<li>pandas.dataframe 实例化</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">// csv to pdf</span><br><span class="line">pdf = pd.read_csv(file_path)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>dataframe to csv</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pdf.to_csv(file_path, index=<span class="keyword">False</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>pandas.dataframe to pyspark.dataframe</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// session的声明方式见上文</span><br><span class="line">df = session.createDataFrame(pdf)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>pdf to string</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s = pdf.to_string()</span><br></pre></td></tr></table></figure>
+<h2 id="复杂问题"><a href="#复杂问题" class="headerlink" title="复杂问题"></a>复杂问题</h2><h3 id="spark-dataframe如何实现多机同步"><a href="#spark-dataframe如何实现多机同步" class="headerlink" title="spark.dataframe如何实现多机同步"></a>spark.dataframe如何实现多机同步</h3><p>正常情况下通过<code>df.write</code>落hdfs(上层可能基于hive或者spark-sql)实现共享。<br>但若要跨集群共享就要另想办法了。<br>解决方案就是将落地数据单独传输：</p>
+<p>1、df -&gt; hdfs -&gt; local file -&gt; internet<br>2、df -&gt; pdf -&gt; byte or string -&gt; internet<br>显然第二种方法只需要落地一次，更优</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># spark df to pandas df</span></span><br><span class="line">pdf = df.toPandas()</span><br><span class="line"></span><br><span class="line"><span class="comment"># pandas df to string</span></span><br><span class="line">s = pdf.to_string()</span><br><span class="line"></span><br><span class="line"><span class="comment"># string to bytes</span></span><br><span class="line">b = str.encode(s)</span><br><span class="line"></span><br><span class="line"><span class="comment"># send</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># bytes to pandas df</span></span><br><span class="line"><span class="keyword">from</span> io <span class="keyword">import</span> StringIO</span><br><span class="line">s = str(bytes_data,<span class="string">'utf-8'</span>)</span><br><span class="line">// sep 必须要指定，非则将结构混乱</span><br><span class="line">df = pd.read_csv(StringIO(s), sep=<span class="string">"\s+"</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="pandas-dataframe数据精度问题"><a href="#pandas-dataframe数据精度问题" class="headerlink" title="pandas.dataframe数据精度问题"></a>pandas.dataframe数据精度问题</h3><p>当pandas.dataframe to_csv或者转为pysprk.dataframe时，会默认进行精度转换，<br>to_csv中提供了指定精度的参数，然而每列特征的精度本就可能不一致，所以最好还是完整保留当前的数据内容。<br>解决方案：<br>1、通过float_format指定最长有效数字，<code>g</code>不补零，<code>f</code>补零</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pdf.to_csv(file_path, index=<span class="keyword">False</span>, float_format=<span class="string">"%.10g"</span>)</span><br></pre></td></tr></table></figure>
+<p>2、使用<code>pdf.to_string</code>的方式，保存数据快照，然后手动进行数据转换为csv。</p>
+
+      
+    </div>
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #555;font-size:14px;">-------------The End-------------</div>
+    
+</div>
+      
+    </div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Zipee 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Zipee 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/pysqark/" rel="tag"># pysqark</a>
+          
+            <a href="/tags/pandas/" rel="tag"># pandas</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/27/兼职运维之ulimit-u/" rel="next" title="兼职运维之ulimit">
+                <i class="fa fa-chevron-left"></i> 兼职运维之ulimit
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpeg"
+                alt="Zipee" />
+            
+              <p class="site-author-name" itemprop="name">Zipee</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ziperlee" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com/ziperlee" title="github" target="_blank">github</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#pyspark"><span class="nav-number">1.</span> <span class="nav-text">pyspark</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pandas"><span class="nav-number">2.</span> <span class="nav-text">pandas</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复杂问题"><span class="nav-number">3.</span> <span class="nav-text">复杂问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#spark-dataframe如何实现多机同步"><span class="nav-number">3.1.</span> <span class="nav-text">spark.dataframe如何实现多机同步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pandas-dataframe数据精度问题"><span class="nav-number">3.2.</span> <span class="nav-text">pandas.dataframe数据精度问题</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zipee</span>
+
+  
+</div>
+
+
+  <div class="powered-by"></div>
+
+
+
+  
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a></div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
