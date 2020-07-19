@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="docker,wins10," />
+  <meta name="keywords" content="nfc," />
 
 
 
@@ -81,18 +81,23 @@
 
 
 
-<meta name="description" content="本文用以记录在docker win10环境使用中踩到的坑及解决方案。">
-<meta name="keywords" content="docker,wins10">
+<meta name="description" content="本文记录使用PN532破解手机厂商对收集nfc功能的限制。">
+<meta name="keywords" content="nfc">
 <meta property="og:type" content="article">
-<meta property="og:title" content="win10docker使用填坑">
-<meta property="og:url" content="https://ziperlee.github.io/zipee.github.io/2018/11/04/win10docker使用填坑/index.html">
+<meta property="og:title" content="破解安卓机nfc功能模拟卡限制">
+<meta property="og:url" content="https://ziperlee.github.io/zipee.github.io/2020/07/19/破解安卓机nfc功能模拟卡限制/index.html">
 <meta property="og:site_name" content="Zipee&#39;s blog">
-<meta property="og:description" content="本文用以记录在docker win10环境使用中踩到的坑及解决方案。">
+<meta property="og:description" content="本文记录使用PN532破解手机厂商对收集nfc功能的限制。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-03-28T14:35:40.000Z">
+<meta property="og:image" content="https://i.loli.net/2020/07/18/pJk3hv4cu6MOsRD.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/07/18/WmZw7TpEuzBDJqL.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/07/18/tXbNPakwWYyfOeV.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/07/19/WeODnArb1QuRMIy.jpg">
+<meta property="og:updated_time" content="2020-07-19T13:43:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="win10docker使用填坑">
-<meta name="twitter:description" content="本文用以记录在docker win10环境使用中踩到的坑及解决方案。">
+<meta name="twitter:title" content="破解安卓机nfc功能模拟卡限制">
+<meta name="twitter:description" content="本文记录使用PN532破解手机厂商对收集nfc功能的限制。">
+<meta name="twitter:image" content="https://i.loli.net/2020/07/18/pJk3hv4cu6MOsRD.jpg">
 
 
 
@@ -122,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="https://ziperlee.github.io/zipee.github.io/2018/11/04/win10docker使用填坑/"/>
+  <link rel="canonical" href="https://ziperlee.github.io/zipee.github.io/2020/07/19/破解安卓机nfc功能模拟卡限制/"/>
 
 
 
 
 
-  <title>win10docker使用填坑 | Zipee's blog</title>
+  <title>破解安卓机nfc功能模拟卡限制 | Zipee's blog</title>
   
 
 
@@ -255,7 +260,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ziperlee.github.io/zipee.github.io/2018/11/04/win10docker使用填坑/">
+    <link itemprop="mainEntityOfPage" href="https://ziperlee.github.io/zipee.github.io/2020/07/19/破解安卓机nfc功能模拟卡限制/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zipee">
@@ -272,7 +277,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">win10docker使用填坑</h1>
+          <h1 class="post-title" itemprop="name headline">破解安卓机nfc功能模拟卡限制</h1>
         
 
         <div class="post-meta">
@@ -284,8 +289,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-04T13:17:09+08:00">
-                2018-11-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-19T21:09:16+08:00">
+                2020-07-19
               </time>
             
 
@@ -307,8 +312,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/docker/" itemprop="url" rel="index">
-                    <span itemprop="name">docker</span>
+                  <a href="/categories/手机/" itemprop="url" rel="index">
+                    <span itemprop="name">手机</span>
                   </a>
                 </span>
 
@@ -349,25 +354,79 @@
       
 
       
-        <div class="note info"><p>本文用以记录在<code>docker win10</code>环境使用中踩到的坑及解决方案。</p></div>
+        <div class="note info"><p>本文记录使用<code>PN532</code>破解手机厂商对收集nfc功能的限制。</p></div>
 <a id="more"></a>
-<h2 id="问题一：docker修改配置或者镜像的存储位置后启动异常"><a href="#问题一：docker修改配置或者镜像的存储位置后启动异常" class="headerlink" title="问题一：docker修改配置或者镜像的存储位置后启动异常"></a>问题一：docker修改配置或者镜像的存储位置后启动异常</h2><h3 id="解决方案："><a href="#解决方案：" class="headerlink" title="解决方案："></a><em>解决方案</em>：</h3><div class="note warning"><ul>
-<li>移动|剪切 C:\Users\Public\Documents\Hyper-V\Virtual hard disks\MobyLinuxVM.vhdx 再重启电脑</li>
-</ul></div>
-<hr>
-<h2 id="问题二：修改镜像存储位置"><a href="#问题二：修改镜像存储位置" class="headerlink" title="问题二：修改镜像存储位置"></a>问题二：修改镜像存储位置</h2><h3 id="解决方案：-1"><a href="#解决方案：-1" class="headerlink" title="解决方案："></a><em>解决方案</em>：</h3><div class="note warning"><ul>
-<li>默认位置：C:\Users\Public\Documents\Hyper-V\Virtual hard disks\MobyLinuxVM.vhdx</li>
-<li>修改：Hyper-V管理器<strong>Hyper-v设置</strong>虚拟硬盘修改路径</li>
-</ul></div>
-<hr>
-<h2 id="问题三：docker安装mysql8-0容器后，是用navicat连接报client-does-not-support-authentication-protocol-requested-by-server-consider-upgrading-mysql-client"><a href="#问题三：docker安装mysql8-0容器后，是用navicat连接报client-does-not-support-authentication-protocol-requested-by-server-consider-upgrading-mysql-client" class="headerlink" title="问题三：docker安装mysql8.0容器后，是用navicat连接报client does not support authentication protocol requested by server consider upgrading mysql client"></a>问题三：docker安装mysql8.0容器后，是用navicat连接报client does not support authentication protocol requested by server consider upgrading mysql client</h2><h3 id="解决方案：-2"><a href="#解决方案：-2" class="headerlink" title="解决方案："></a><em>解决方案</em>：</h3><div class="note warning"><ul>
-<li>进入容器<br>docker exec -it mysql bash</li>
-<li>进入mysql<br>mysql -u root -p</li>
-<li>创建root用户<br>CREATE USER ‘root‘@’%’ IDENTIFIED IDENTIFIED WITH <code>mysql_native_password</code> BY ‘123456’;</li>
-<li>设置root用户访问权限<br>GRANT ALL PRIVILEGES ON <em>.</em> TO ‘root‘@’%’ WITH GRANT OPTION;</li>
-<li>重置密码<br>ALTER USER ‘root‘@’%’ IDENTIFIED WITH <code>mysql_native_password</code> BY ‘123456’;<br>ALTER USER ‘root‘@’localhost’ IDENTIFIED WITH <code>mysql_native_password</code> BY ‘123456’;</li>
-<li>提交修改<br>FLUSH PRIVILEGES;</li>
-</ul></div>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><ul>
+<li>一般安卓旗舰都带有nfc功能，但是简单的使用门卡功能复制了两张卡片，缺无法使用，本文记录使用<code>PN532</code>破解手机厂商对收集nfc功能的限制</li>
+</ul>
+<h2 id="准备材料"><a href="#准备材料" class="headerlink" title="准备材料"></a>准备材料</h2><ul>
+<li>带nfc功能的<code>安卓</code>手机（iphone没试过）</li>
+<li><code>PN532</code>nfc加解密工具（TB购买）</li>
+<li>一张CUID卡，用于克隆卡数据</li>
+<li>一台Windows上位机，用于安装PN532驱动</li>
+<li>破解卡类型只针对<code>半加密卡</code></li>
+</ul>
+<h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><ol>
+<li>判断待模拟卡是否为半加密卡<ul>
+<li>手机安装<code>MIFARE Classic Tool</code>工具，通过<code>读标签</code>读取实体卡片数据<br><img src="https://i.loli.net/2020/07/18/pJk3hv4cu6MOsRD.jpg" alt="WechatIMG26.jpeg"> </li>
+</ul>
+</li>
+</ol>
+<pre><code>- 半解密卡数据格式如下
+![20200718221445.jpg](https://i.loli.net/2020/07/18/jUFSKEIyl9hXxLt.jpg)
+</code></pre><ol start="2">
+<li>安装PN532上位机驱动（软件操作大同小异，就不贴图了）</li>
+<li><p>使用PN532破解，并读取实体卡数据</p>
+<ul>
+<li>将原卡放在PN532上，点击“一键破解”，大概5s后窗口显示破解数据（读出数据后，可以选择保存文件，记住该文件名）</li>
+</ul>
+</li>
+<li><p>使用CUID卡克隆实体卡</p>
+<ul>
+<li>将CUID卡放在PN532上，点击“写CUID卡”（因为此时步骤3暂存着实体卡的解密数据），等待CUID卡写入完成，使用该CUID卡去刷门禁，成功则说明克隆完成</li>
+</ul>
+</li>
+<li><p>格式化CUID，使其只保留0扇区数据</p>
+<ul>
+<li>将CUID卡放在PN532上，点击“格式化卡”，这样CUID即成了实体卡的同号空卡</li>
+</ul>
+</li>
+<li>手机模拟CUID卡数据（即实体卡的同号空卡）<ul>
+<li>（以小米手机为例）小米钱包-==门卡==-模拟实体门卡，讲CUID卡在上手机背面，并完成对应操作<br><img src="https://i.loli.net/2020/07/18/WmZw7TpEuzBDJqL.jpg" alt="301595081317_.pic.jpg"></li>
+</ul>
+</li>
+<li><p>通过PN532像手机模拟的同号空卡中写入其他扇区加密数据</p>
+<ul>
+<li>讲手机放在PN532上，导入步骤1保存的数据，点击“写普通M1卡”，写入成功加密数据，不出意外，手机上的模拟卡已可以正常使用</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><p>异常情况</p>
+<ul>
+<li><p>确认步骤如下，若模拟卡无法使用，则导出模拟卡数据至CUID卡，若CUID卡可以使用，则说明该设备不支持识别模拟卡（一些设备，如家庭门禁不识别模拟卡，暂时无解）</p>
+</li>
+<li><p>若CUID卡也无法使用，则说明整体操作存在问题，需仔细阅读操作步骤，并也可以到处模拟卡数据，通过dump数据比对工具和原实体卡导出数据比对，若0扇区前8位数据不一致，则说明没有模拟成功，后8位为厂商识别码，不一致是正常的</p>
+</li>
+<li><p>异常情况的<code>银弹</code>是使用卡贴（选择CUID卡功能的卡贴）</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="扫盲"><a href="#扫盲" class="headerlink" title="扫盲"></a>扫盲</h2><ul>
+<li>芯片分类<ul>
+<li>8268卡也叫ID防火墙卡</li>
+<li>手机nfc能模拟的是IC卡</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2020/07/18/tXbNPakwWYyfOeV.jpg" alt="281595081315_.pic.jpg"></p>
+<ul>
+<li><p>IC卡与ID卡</p>
+<p><a href="https://i.loli.net/2020/07/19/WeODnArb1QuRMIy.jpg" target="_blank" rel="noopener"><img src="https://i.loli.net/2020/07/19/WeODnArb1QuRMIy.jpg" alt="271595081314_.pic.jpg"></a></p>
+</li>
+</ul>
+
       
     </div>
     <div>
@@ -419,9 +478,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/docker/" rel="tag"># docker</a>
-          
-            <a href="/tags/wins10/" rel="tag"># wins10</a>
+            <a href="/tags/nfc/" rel="tag"># nfc</a>
           
         </div>
       
@@ -434,15 +491,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2020/04/09/jenkins前后端分离部署/" rel="next" title="jenkins前后端分离部署">
+                <i class="fa fa-chevron-left"></i> jenkins前后端分离部署
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/11/25/flask服务端推送/" rel="prev" title="flask服务端推送">
-                flask服务端推送 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -609,7 +666,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题一：docker修改配置或者镜像的存储位置后启动异常"><span class="nav-number">1.</span> <span class="nav-text">问题一：docker修改配置或者镜像的存储位置后启动异常</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方案："><span class="nav-number">1.1.</span> <span class="nav-text">解决方案：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题二：修改镜像存储位置"><span class="nav-number">2.</span> <span class="nav-text">问题二：修改镜像存储位置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方案：-1"><span class="nav-number">2.1.</span> <span class="nav-text">解决方案：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题三：docker安装mysql8-0容器后，是用navicat连接报client-does-not-support-authentication-protocol-requested-by-server-consider-upgrading-mysql-client"><span class="nav-number">3.</span> <span class="nav-text">问题三：docker安装mysql8.0容器后，是用navicat连接报client does not support authentication protocol requested by server consider upgrading mysql client</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方案：-2"><span class="nav-number">3.1.</span> <span class="nav-text">解决方案：</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#准备材料"><span class="nav-number">2.</span> <span class="nav-text">准备材料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作步骤"><span class="nav-number">3.</span> <span class="nav-text">操作步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扫盲"><span class="nav-number">4.</span> <span class="nav-text">扫盲</span></a></li></ol></div>
             
 
           </div>
