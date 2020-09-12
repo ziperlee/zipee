@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="mysql,问题分析," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -81,18 +81,19 @@
 
 
 
-<meta name="description" content="问题现象： web端调用flask接口阻塞，最终超时返回系统异常 查询日志得知具体异常为超出数据库最大连接数 重新flask webserver后数据库连接数正常释放 持续使用系统一段时间后数据库连接数再次封顶 环境操作用户寥寥无几">
-<meta name="keywords" content="mysql,问题分析">
+<meta name="description" content="落下的都得补上。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="sqlalchemy数据库连接数异常">
-<meta property="og:url" content="https://ziperlee.github.io/zipee.github.io/2019/01/22/sqlalchemy数据库连接数异常/index.html">
+<meta property="og:title" content="设计模式学习总结">
+<meta property="og:url" content="https://ziperlee.github.io/zipee.github.io/2020/09/12/设计模式学习总结/index.html">
 <meta property="og:site_name" content="Zipee&#39;s blog">
-<meta property="og:description" content="问题现象： web端调用flask接口阻塞，最终超时返回系统异常 查询日志得知具体异常为超出数据库最大连接数 重新flask webserver后数据库连接数正常释放 持续使用系统一段时间后数据库连接数再次封顶 环境操作用户寥寥无几">
+<meta property="og:description" content="落下的都得补上。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-03-28T14:35:40.000Z">
+<meta property="og:image" content="https://i.loli.net/2020/09/08/z8xwGEeyLJdBZ71.jpg">
+<meta property="og:updated_time" content="2020-09-12T10:12:08.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="sqlalchemy数据库连接数异常">
-<meta name="twitter:description" content="问题现象： web端调用flask接口阻塞，最终超时返回系统异常 查询日志得知具体异常为超出数据库最大连接数 重新flask webserver后数据库连接数正常释放 持续使用系统一段时间后数据库连接数再次封顶 环境操作用户寥寥无几">
+<meta name="twitter:title" content="设计模式学习总结">
+<meta name="twitter:description" content="落下的都得补上。">
+<meta name="twitter:image" content="https://i.loli.net/2020/09/08/z8xwGEeyLJdBZ71.jpg">
 
 
 
@@ -122,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="https://ziperlee.github.io/zipee.github.io/2019/01/22/sqlalchemy数据库连接数异常/"/>
+  <link rel="canonical" href="https://ziperlee.github.io/zipee.github.io/2020/09/12/设计模式学习总结/"/>
 
 
 
 
 
-  <title>sqlalchemy数据库连接数异常 | Zipee's blog</title>
+  <title>设计模式学习总结 | Zipee's blog</title>
   
 
 
@@ -255,7 +256,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ziperlee.github.io/zipee.github.io/2019/01/22/sqlalchemy数据库连接数异常/">
+    <link itemprop="mainEntityOfPage" href="https://ziperlee.github.io/zipee.github.io/2020/09/12/设计模式学习总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zipee">
@@ -272,7 +273,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">sqlalchemy数据库连接数异常</h1>
+          <h1 class="post-title" itemprop="name headline">设计模式学习总结</h1>
         
 
         <div class="post-meta">
@@ -284,8 +285,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-22T21:03:19+08:00">
-                2019-01-22
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-12T18:11:36+08:00">
+                2020-09-12
               </time>
             
 
@@ -307,8 +308,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/问题分析/" itemprop="url" rel="index">
-                    <span itemprop="name">问题分析</span>
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
                   </a>
                 </span>
 
@@ -349,73 +350,112 @@
       
 
       
-        <h3 id="问题现象："><a href="#问题现象：" class="headerlink" title="问题现象："></a>问题现象：</h3><div class="note warning"><ul>
-<li>web端调用flask接口阻塞，最终超时返回系统异常</li>
-<li>查询日志得知具体异常为超出数据库最大连接数</li>
-<li>重新flask webserver后数据库连接数正常释放</li>
-<li>持续使用系统一段时间后数据库连接数再次封顶</li>
-<li>环境操作用户寥寥无几</li>
-</ul></div>
+        <div class="note info"><p>落下的都得补上。</p></div>
 <a id="more"></a>
-<hr>
-<h3 id="问题环境："><a href="#问题环境：" class="headerlink" title="问题环境："></a>问题环境：</h3><div class="note info"><ul>
-<li>使用flask搭建webserver的运行环境</li>
-<li>使用flask-sqlalchemy连接数据库并进行相关业务操作，SQLALCHEMY_POOL_SIZE = 64， SQLALCHEMY_POOL_RECYCLE = 30</li>
-<li>mysql设置最大连接数200</li>
-<li>宿主机CPU 2核心</li>
-<li>通过进程数2*2+1 = 5</li>
-</ul></div>
-<hr>
-<h3 id="问题分析："><a href="#问题分析：" class="headerlink" title="问题分析："></a>问题分析：</h3><ol>
-<li><p>怀疑对flask-sqlalchemy使用不当导致</p>
 <ul>
-<li>问题原因明显是数据库连接使用后没有释放</li>
-<li>数据库操作业务层均使用封装的方法，不存在操作对数据库的连接和释放</li>
-<li>flask-sqlalchemy的连接释放由<code>teardown_appcontext</code>钩子统一处理<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.teardown_appcontext</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">shutdown_session</span><span class="params">(response_or_exc)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> app.config[<span class="string">'SQLALCHEMY_COMMIT_ON_TEARDOWN'</span>]:</span><br><span class="line">        <span class="keyword">if</span> response_or_exc <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">            self.session.commit()</span><br><span class="line"></span><br><span class="line">    self.session.remove()</span><br><span class="line">    <span class="keyword">return</span> response_or_exc</span><br></pre></td></tr></table></figure>
+<li><p>一张总结图起手</p>
+<p><img src="https://i.loli.net/2020/09/08/z8xwGEeyLJdBZ71.jpg" alt="20200908194129.jpg"></p>
+</li>
+</ul>
+<h2 id="相似的设计模式对比"><a href="#相似的设计模式对比" class="headerlink" title="相似的设计模式对比"></a>相似的设计模式对比</h2><ul>
+<li>工厂模式 &amp;&amp; 建造者模式<ul>
+<li>工厂模式是用来创建不同但是相关类型的对象（继承同一父类或者接口的一组子类），由给定的参数来决定创建哪种类型的对象</li>
+<li>建造者模式是用来创建一种类型的复杂对象，可以通过设置不同的可选参数，“定制化”地创建不同的对象</li>
+<li>比喻<ul>
+<li>工厂模式：土豆，面粉，番茄</li>
+<li>建造者模式：披萨</li>
+</ul>
 </li>
 </ul>
 </li>
-<li><p>mysql数据库连接超出首因</p>
+<li>策略模式  &amp;&amp; 命令模式<ul>
+<li>在策略模式中，不同的策略具有相同的目的、不同的实现、互相之间可以替换。比如，BubbleSort、SelectionSort 都是为了实现排序的，只不过一个是用冒泡排序算法来实现的，另一个是用选择排序算法来实现的。而在命令模式中，不同的命令具有不同的目的，对应不同的处理逻辑，并且互相之间不可替换</li>
+</ul>
+</li>
+<li><p>单例模式  &amp;&amp; 享元模式  &amp;&amp; 缓存  &amp;&amp; 静态工厂方法</p>
 <ul>
-<li>(2*2+1) * 64 &gt; 200 </li>
-<li>困惑连接数回收已经指定<code>SQLALCHEMY_POOL_RECYCLE=30</code>但未生效</li>
-<li>对<code>SQLALCHEMY_POOL_RECYCLE</code>理解错误，该项真实含义为queue_pool可用连接的回收时间</li>
-<li>当前问题为连接未释放，顾与<code>SQLALCHEMY_POOL_RECYCLE</code>无关</li>
+<li>他们的共同点是:对象的复用</li>
+<li>不同点:<ul>
+<li>应用享元模式是为了对象”共享使用”，节省内存</li>
+<li>而应用单例/多例模式是为了限制对象的个数</li>
+<li>应用缓存是为了提高访问效率</li>
+<li>应用对象池(数据库连接池,线程池)是为了对象的”重复使用”和管理,主要是为了节省时间</li>
+<li>有一种方法叫 静态工厂方法,例如 Boolean.valueof(),不会在每次调用时返回一个新对象,而是复用已有的,这一点有点像享元模式</li>
 </ul>
 </li>
-<li>若(2*2+1) * 64 &lt; 200 会不会好点？<ul>
-<li>异常改为<code>QueuePool limit of size &lt;x&gt; overflow &lt;y&gt; reached, connection timed out, timeout &lt;z&gt;</code></li>
-<li>达到queue_pool的最大限制后同样是无法连接数据库，只是换了种“死法”</li>
 </ul>
 </li>
-</ol>
-<p><strong>分析到这里仍旧没有头绪…</strong></p>
-<hr>
-<h3 id="问题排查："><a href="#问题排查：" class="headerlink" title="问题排查："></a>问题排查：</h3><ul>
-<li><p><strong>查询数据库连接数</strong> </p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM INFORMATION_SCHEMA. PROCESSLIST</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>linux下查询连接端口对应的进程</strong></p>
-  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsof -i:48057|grep celery|awk   '&#123;print$2&#125;'|xargs -I&#123;&#125; echo 'ps -ef|grep &#123;&#125;'|bash</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>windows下查询连接端口对应的进程</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">netstat -ano|findstr "8080"</span><br><span class="line">tasklist|findstr [进程号]</span><br></pre></td></tr></table></figure>
+<li><p>适配器  &amp;&amp; 代理 &amp;&amp; 装饰器 &amp;&amp; 桥接,:</p>
+<ul>
+<li>他们的共同点是:对方法的增强</li>
+<li>不同点:<ul>
+<li>适配器模式的作用是”适配”,通常用于适配不同的组件,新旧系统</li>
+<li>桥接模式将接口部分和实现部分分离,使两者可以分别扩展</li>
+<li>装饰者模式是对原始类功能进行增强，并且可以支持多次,多种增强</li>
+<li>代理模式实现了代理类和原始类的解耦,使代理类可以用于增强不同的功能</li>
+</ul>
 </li>
 </ul>
-<hr>
-<h3 id="问题解决："><a href="#问题解决：" class="headerlink" title="问题解决："></a>问题解决：</h3><ul>
-<li>问题调试发现单接口调用连接数并未按预期增长</li>
-<li>通过页面使用操作连接数会不规则的增长</li>
-<li>逐个接口比对，最终发现在调用sse长连接接口后，连接数会稳定增长1</li>
-<li>分析sse仅操作了redis，并未存在对mysql的相关操作</li>
-<li>调试发现调用sse会进入@after_request请求钩子中，而在该钩子处理函数中使用了current_user，即调用了数据库</li>
-<li>到此真相大白，代码修改很简单过滤该url既可，但问题的思考排查真实饶了一大圈</li>
+</li>
+<li><p>策略模式 &amp;&amp; 简单工厂模式 &amp;&amp; 命令模式:</p>
+<ul>
+<li>共同点:都有对if/else进行下沉</li>
+<li>不同点:<ul>
+<li>策略模式根据运行时状态返回一个”策略”/“算法”,这些”策略”具有相同目的,比如BubbleSort、SelectionSort 都是为了实现排序</li>
+<li>命令模式中不同的命令具有不同的目的，对应不同的处理逻辑，并且互相之间不可替换</li>
+<li>而简单工厂更侧重返回一个创建的对象</li>
 </ul>
-<hr>
-<h3 id="问题总结："><a href="#问题总结：" class="headerlink" title="问题总结："></a>问题总结：</h3><ul>
-<li>最后反思，其实在确定flask-sqlalchemy框架层在正常api逻辑处理中会自动释放连接后，就应该直接猜测是非业务短连接接口导致，但这其中的盲点主要在sse正常情况下是与mysql毫不相干的，顾很容易忽略sse的长连接问题</li>
+</li>
 </ul>
-<hr>
+</li>
+</ul>
+<ul>
+<li><p>中介模式  &amp;&amp;  观察者模式</p>
+<ul>
+<li>在观察者模式中，尽管一个参与者既可以是观察者，同时也可以是被观察者，但是，大部分情况下，交互关系往往都是单向的，一个参与者要么是观察者，要么是被观察者，不会兼具两种身份。也就是说，在观察者模式的应用场景中，参与者之间的交互关系比较有条理</li>
+<li>而中介模式正好相反。只有当参与者之间的交互关系错综复杂，维护成本很高的时候，我们才考虑使用中介模式。毕竟，中介模式的应用会带来一定的副作用，前面也讲到，它有可能会产生大而复杂的上帝类。除此之外，如果一个参与者状态的改变，其他参与者执行的操作有一定先后顺序的要求，这个时候，中介模式就可以利用中介类，通过先后调用不同参与者的方法，来实现顺序的控制，而观察者模式是无法实现这样的顺序要求的</li>
+</ul>
+</li>
+<li><p>享元模式  &amp;&amp;  单例  &amp;&amp; 缓存 &amp;&amp; 对象池</p>
+<ul>
+<li>享元模式跟单例<ul>
+<li>在单例模式中，一个类只能创建一个对象，而在享元模式中，一个类可以创建多个对象，每个对象被多处代码引用共享。实际上，享元模式有点类似于之前讲到的单例的变体：==多例==</li>
+<li>尽管从代码实现上来看，享元模式和多例有很多相似之处，但从设计意图上来看，它们是完全不同的。应用享元模式是为了对象复用，节省内存，而应用多例模式是为了限制对象的个数</li>
+</ul>
+</li>
+<li>享元模式跟缓存<ul>
+<li>享元的“缓存”实际上是“存储”的意思</li>
+<li>通常意义上的缓存，主要是为了提高访问效率，而非复用</li>
+</ul>
+</li>
+<li>享元模式跟对象池<ul>
+<li>对象池、连接池、线程池等池化技术中的“复用”和享元模式中的“复用”实际上是不同的概念</li>
+<li>池化技术中的“复用”可以理解为“重复使用”，主要目的是节省时间，在任意时刻，每一个对象、连接、线程，并不会被多处使用，而是被一个使用者独占，当使用完成之后，放回到池中，再由其他使用者重复利用</li>
+</ul>
+</li>
+<li>享元模式中的“复用”可以理解为“共享使用”，在整个生命周期中，都是被所有使用者共享的，主要目的是节省空间</li>
+</ul>
+</li>
+<li><p>模板模式  &amp;&amp;  回调</p>
+<ul>
+<li><p>从应用场景上来看，同步回调跟模板模式几乎一致。它们都是在一个大的算法骨架中，自由替换其中的某个步骤，起到代码复用和扩展的目的。而异步回调跟模板模式有较大差别，更像是观察者模式</p>
+</li>
+<li><p>从代码实现上来看，回调和模板模式完全不同。回调基于组合关系来实现，把一个对象传递给另一个对象，是一种对象之间的关系；模板模式基于继承关系来实现，子类重写父类的抽象方法，是一种类之间的关系</p>
+</li>
+<li><p>回调相对于模板模式会更加灵活</p>
+<ul>
+<li>像 Java 这种只支持单继承的语言，基于模板模式编写的子类，已经继承了一个父类，不再具有继承的能力</li>
+<li>回调可以使用匿名类来创建回调对象，可以不用事先定义类；而模板模式针对不同的实现都要定义不同的子类</li>
+<li>如果某个类中定义了多个模板方法，每个方法都有对应的抽象方法，那即便我们只用到其中的一个模板方法，子类也必须实现所有的抽象方法。而回调就更加灵活，我们只需要往用到的模板方法中注入回调对象即可</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>实际上，每个设计模式都应该由两部分组成：第一部分是应用场景，即这个模式可以解决哪类问题；第二部分是解决方案，即这个模式的设计思路和具体的代码实现。不过，代码实现并不是模式必须包含的。如果你单纯地只关注解决方案这一部分，甚至只关注代码实现，就会产生大部分模式看起来都很相似的错觉</li>
+<li>实际上，==设计模式之间的主要区别还是在于设计意图==，也就是应用场景。单纯地看设计思路或者代码实现，有些模式确实很相似，比如策略模式和工厂模式</li>
+</ul>
 
       
     </div>
@@ -466,14 +506,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/mysql/" rel="tag"># mysql</a>
-          
-            <a href="/tags/问题分析/" rel="tag"># 问题分析</a>
-          
-        </div>
-      
 
       
       
@@ -483,8 +515,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/12/30/python代码加密部署/" rel="next" title="python代码pyc化加密部署">
-                <i class="fa fa-chevron-left"></i> python代码pyc化加密部署
+              <a href="/2020/08/14/记一次spring事务问题排查/" rel="next" title="记一次spring事务问题排查">
+                <i class="fa fa-chevron-left"></i> 记一次spring事务问题排查
               </a>
             
           </div>
@@ -492,10 +524,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/03/10/webserver异常-TooManyOpenFiles/" rel="prev" title="webserver异常-TooManyOpenFiles">
-                webserver异常-TooManyOpenFiles <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -662,7 +690,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题现象："><span class="nav-number">1.</span> <span class="nav-text">问题现象：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题环境："><span class="nav-number">2.</span> <span class="nav-text">问题环境：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题分析："><span class="nav-number">3.</span> <span class="nav-text">问题分析：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题排查："><span class="nav-number">4.</span> <span class="nav-text">问题排查：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题解决："><span class="nav-number">5.</span> <span class="nav-text">问题解决：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题总结："><span class="nav-number">6.</span> <span class="nav-text">问题总结：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#相似的设计模式对比"><span class="nav-number">1.</span> <span class="nav-text">相似的设计模式对比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">2.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>
