@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://ziperlee.github.io/zipee.github.io/"/>
-  <updated>2020-09-12T10:12:08.000Z</updated>
+  <updated>2020-10-10T08:07:45.000Z</updated>
   <id>https://ziperlee.github.io/zipee.github.io/</id>
   
   <author>
@@ -15,6 +15,50 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>数据仓库构建思考</title>
+    <link href="https://ziperlee.github.io/zipee.github.io/2020/10/10/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E6%9E%84%E5%BB%BA%E6%80%9D%E8%80%83/"/>
+    <id>https://ziperlee.github.io/zipee.github.io/2020/10/10/数据仓库构建思考/</id>
+    <published>2020-10-10T06:52:13.000Z</published>
+    <updated>2020-10-10T08:07:45.000Z</updated>
+    
+    <content type="html"><![CDATA[<div class="note info"></div><a id="more"></a><h3 id="项目需求"><a href="#项目需求" class="headerlink" title="项目需求"></a>项目需求</h3><ol><li>数据输入<ul><li>用户行为数据采集</li><li>业务数据采集</li></ul></li><li>数据存储<ul><li>数仓分层</li><li>维度建模&amp;报表指标</li></ul></li><li>数据输出<ul><li>采用即席查询进行指标分析</li></ul></li><li>系统监控<ul><li>集群性能监控&amp;异常报警</li></ul></li><li>元数据管理</li><li>质量监控</li></ol><h3 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h3><h4 id="1-技术选型"><a href="#1-技术选型" class="headerlink" title="1. 技术选型"></a>1. 技术选型</h4><ul><li>考虑因素<ul><li>数据量大小</li><li>业务需求（用户数据、业务数据）</li><li>行业内经验（避免走弯路，借鉴）</li><li>技术成熟度</li><li>开发维护成本（CDH版本等）</li><li>总成本预算</li></ul></li><li>数据采集传输<ul><li>Flume<ul><li>擅长读取日志文件</li><li>相较于Logstash，行业内使用Flume更多</li></ul></li><li>Kafka<ul><li>削峰</li></ul></li><li>Sqoop<ul><li>转换mysql</li></ul></li><li>Logstash<ul><li>没有大数据的公司专门用来处理日志</li></ul></li><li>DataX<ul><li>和Sqoop市场占有率 50%:50%</li></ul></li></ul></li><li>数据存储<ul><li>MySql</li><li>HDFS</li><li>HBase<ul><li>快速插入</li></ul></li><li>Redis</li><li>MongoDB<ul><li>爬虫数据</li></ul></li></ul></li><li>数据计算<ul><li>Hive</li><li>Tez<ul><li>基于内存</li></ul></li><li>Spark</li><li>Flink</li><li><del>Storm</del><ul><li>没落，淘汰</li></ul></li></ul></li><li><p>数据查询</p><ul><li>Presto<ul><li>快速查询，支持多数据源</li><li>若是apache则选择</li></ul></li><li>Druid</li><li>Impala<ul><li>Presto的竞品</li><li>cdh优先选择</li></ul></li><li><p>Kylin</p><ul><li>多维查询，聚合</li></ul><p><img src="https://i.loli.net/2020/10/09/b8wS91HZ5FMmfUz.jpg" alt="20201009102131.jpg"></p></li></ul></li><li>数据可视化<ul><li>Echarts<ul><li>百度开源，开发要求较高</li></ul></li><li>Superset<ul><li>难度低</li></ul></li><li>QuickBI<ul><li>离线指标，阿里开源，收费</li></ul></li><li>DataV<ul><li>可视化大屏，阿里开源，收费</li></ul></li></ul></li><li>任务调度<ul><li>Azkaban<ul><li>简单实用</li></ul></li><li>Oozie<ul><li>功能多</li></ul></li></ul></li><li><p>集群监控</p><ul><li>Zabbix</li><li>Prometheus（没有历史包袱的建议选择）</li></ul></li></ul><table><thead><tr><th>Zabbix</th><th>Prometheus</th></tr></thead><tbody><tr><td>后端用 C 开发，界面用 PHP 开发，定制化难度很高。</td><td>后端用 golang 开发，前端是 Grafana，JSON 编辑即可解决。定制化难度较低。</td></tr><tr><td>集群规模上限为 10000 个节点。</td><td>支持更大的集群规模，速度也更快。</td></tr><tr><td>更适合监控物理机环境。</td><td>更适合云环境的监控，对 OpenStack，Kubernetes 有更好的集成。</td></tr><tr><td>监控数据存储在关系型数据库内，如 MySQL，很难从现有数据中扩展维度。</td><td>监控数据存储在基于时间序列的数据库内，便于对已有数据进行新的聚合。</td></tr><tr><td>安装简单，zabbix-server 一个软件包中包括了所有的服务端功能。</td><td>安装相对复杂，监控、告警和界面都分属于不同的组件。</td></tr><tr><td>图形化界面比较成熟，界面上基本上能完成全部的配置操作。</td><td>界面相对较弱，很多配置需要修改配置文件。</td></tr><tr><td>发展时间更长，对于很多监控场景，都有现成的解决方案。</td><td>2015 年后开始快速发展，但发展时间较短，成熟度不及 Zabbix。</td></tr></tbody></table><ul><li>元数据管理<ul><li>Atlas</li></ul></li><li>数据质量监控<ul><li>Griffin</li><li>Shell</li><li>Python</li></ul></li></ul><h4 id="2-框架版本选择"><a href="#2-框架版本选择" class="headerlink" title="2. 框架版本选择"></a>2. 框架版本选择</h4><ul><li>Apache<ul><li>灵活，操作难度高</li><li>无管理工具</li></ul></li><li>CDH<ul><li>管理工具，Cloudera Manager（闭源）</li><li>操作简单，但由于Cloudera不在维护免费版，故不推荐</li></ul></li><li>HDP<ul><li>管理工具，Ambari（开源）</li></ul></li></ul><h4 id="3-服务器使用物理机or云主机"><a href="#3-服务器使用物理机or云主机" class="headerlink" title="3. 服务器使用物理机or云主机"></a>3. 服务器使用物理机or云主机</h4><ul><li>预算充足 + 专业运维 = 物理机</li><li>预算不足 | 短期产品开发迭代 | 无专业运维 = 云主机</li></ul><h4 id="4-如何确认集群规模（假设：每台服务器8T磁盘，128G内存）"><a href="#4-如何确认集群规模（假设：每台服务器8T磁盘，128G内存）" class="headerlink" title="4. 如何确认集群规模（假设：每台服务器8T磁盘，128G内存）"></a>4. 如何确认集群规模（假设：每台服务器8T磁盘，128G内存）</h4><ol><li>假设每天日活100W，每人一天平均100条数据：100W*100=1亿条</li><li>每条日志1K，每天1亿条：1亿/1024/1024=100G</li><li>半年内不扩容服务器来算：100G*180天=18T</li><li>保存3副本：18T*3=54T</li><li>预留20%～30%=54T/0.7=77T</li><li>77T/8=10台服务器</li><li>如果考虑数仓分层，采用数据压缩，需另行计算</li></ol><h3 id="集群服务器规划原则"><a href="#集群服务器规划原则" class="headerlink" title="集群服务器规划原则"></a>集群服务器规划原则</h3><ul><li>hdfs namenode 和 yarn resource manager分开</li><li>服务间通讯紧密放一起</li><li>服务内存资源占用多的分开</li></ul><h3 id="架构图"><a href="#架构图" class="headerlink" title="架构图"></a>架构图</h3><ul><li>Zabbix换成Prometheus</li></ul><p><img src="https://i.loli.net/2020/09/14/Vu9RqIvoZ81wfKt.jpg" alt="20200914174642.jpg"></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;div class=&quot;note info&quot;&gt;&lt;/div&gt;
+    
+    </summary>
+    
+      <category term="大数据" scheme="https://ziperlee.github.io/zipee.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+    
+      <category term="数据仓库" scheme="https://ziperlee.github.io/zipee.github.io/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>数据仓库概念总结</title>
+    <link href="https://ziperlee.github.io/zipee.github.io/2020/10/10/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E6%A6%82%E5%BF%B5%E6%80%BB%E7%BB%93/"/>
+    <id>https://ziperlee.github.io/zipee.github.io/2020/10/10/数据仓库概念总结/</id>
+    <published>2020-10-10T03:11:26.000Z</published>
+    <updated>2020-10-10T07:22:28.000Z</updated>
+    
+    <content type="html"><![CDATA[<div class="note info"></div><a id="more"></a><h3 id="数据仓库（Data-Warehouse）建模"><a href="#数据仓库（Data-Warehouse）建模" class="headerlink" title="数据仓库（Data Warehouse）建模"></a>数据仓库（Data Warehouse）建模</h3><h4 id="ODS（备份）"><a href="#ODS（备份）" class="headerlink" title="ODS（备份）"></a>ODS（备份）</h4><ol><li>保持数据原貌不做任何修改， 起到备份数据的作用。</li><li>数据采用压缩， 减少磁盘存储空间（ 例如： 原始数据 100G， 可以压缩到 10G 左右）</li><li>创建分区表， 防止后续的全表扫描（一般按日期）</li><li>创建外部表。 在企业开发中， 除了自己用的临时表， 创建内部表外， 绝大多数场景都是创建外部表</li></ol><ul><li>构建步骤<ol><li>用户行为数据（事件&amp;启动），（json to string） hive单行保存</li><li>业务数据，hdfs to hive</li></ol></li></ul><h4 id="DWD（清洗）"><a href="#DWD（清洗）" class="headerlink" title="DWD（清洗）"></a>DWD（清洗）</h4><ul><li>构建步骤<ol><li>对用户行为数据解析</li><li>对核心数据进行判空过滤</li><li>对业务数据采用<code>维度模型</code>重新建模， 即<code>维度退化</code></li></ol></li><li>DWD 层需<code>构建维度模型</code>， 一般采用星型模型， 呈现的状态一般为星座模型</li><li>维度建模一般按照以下四个步骤：<ol><li>选择业务过程</li><li>声明粒度</li><li>确认维度（维度表）<ul><li>原则是： 后续需求中是否要分析相关维度的指标</li><li>维度表： 需要根据维度建模中的星型模型原则进行维度退化</li></ul></li><li>确认事实（事实表）<ul><li>事实指的是业务中的度量值（次数、 个数、 件数、 金额， 可以进行累加）</li></ul></li></ol></li><li>DWS 层、 DWT 层和 ADS 层都是以需求为驱动， 和维度建模已经没有关系了</li><li>DWS 和 DWT 都是建宽表， 按照主题去建表。 主题相当于观察问题的角度。 对应着维度表</li></ul><h4 id="DWS（按天聚合）"><a href="#DWS（按天聚合）" class="headerlink" title="DWS（按天聚合）"></a>DWS（按天聚合）</h4><ul><li>DWS 层统计各个主题对象的当天行为， 服务于 DWT 层的主题宽表</li><li>需要建哪些表： 以维度为基准， 去关联对应多个事实表</li><li>宽表里面的字段： 是站在不同维度的角度去看事实表， 重点关注事实表聚合后的度量值<br><img src="https://i.loli.net/2020/09/27/gZArseXBRlvfDwE.jpg" alt="20200927173303.jpg"></li></ul><h4 id="DWT（全量聚合统计）"><a href="#DWT（全量聚合统计）" class="headerlink" title="DWT（全量聚合统计）"></a>DWT（全量聚合统计）</h4><ul><li>DWT 层统计各个主题对象的累积行为<ol><li>需要建哪些表： 和 DWS 层一样。 以维度为基准， 去关联对应多个事实表</li><li>宽表里面的字段： 我们站在维度表的角度去看事实表， 重点关注事实表度量值的累积值、 事实表行为的首次和末次时间(订单事实表至今的累积下单次数、 累积下单金额和某时间段内的累积次数、 累积金额， 以及关注下单行为的首次时间和末次时间)</li></ol></li></ul><h4 id="ADS（指标）"><a href="#ADS（指标）" class="headerlink" title="ADS（指标）"></a>ADS（指标）</h4><ul><li>对系统各大主题指标分别进行分析</li></ul><hr><h3 id="数仓命名规范"><a href="#数仓命名规范" class="headerlink" title="数仓命名规范"></a>数仓命名规范</h3><ul><li>表命名<ul><li>ODS层命名为ods_表名</li><li>DWD层命名为dwd_dim/fact_表名</li><li>DWS层命名为dws_表名</li><li>DWT层命名为dwt_表名</li><li>ADS层命名为ads_表名</li><li>临时表命名为xxx_tmp</li><li>用户行为表， 以log为后缀</li></ul></li><li>脚本命名<ul><li>数据源_to_目标_db/log.sh</li><li>用户行为脚本以log为后缀； 业务数据脚本以db为后缀</li></ul></li></ul><hr><h3 id="表分类"><a href="#表分类" class="headerlink" title="表分类"></a>表分类</h3><ul><li>日志表<ul><li>启动日志表</li><li>事件日志表（根据事件类型区分）</li></ul></li><li>业务表<ul><li>维度表<ul><li>全量表</li><li>特殊表</li></ul></li><li>事实表<ul><li>周期型快照事实表<ul><li>每日快照，全量导入</li><li>周期型快照事实表存储的数据比较讲究时效性， 时间太久了的意义不大， 可以删除以前的数据</li></ul></li><li>事务型快照事实表<ul><li>一旦产生不会变化，只需导增量</li></ul></li><li>累计型快照事实表（！！难点，动态分区，sql复杂）<ul><li>用事件开始的时间作为分区</li><li>用于跟踪业务事实的变化</li></ul></li><li>拉链表（！！）<ul><li>用户维度表<ul><li>修改频率不高，属于缓慢变化维度</li></ul></li></ul></li></ul></li></ul></li></ul><hr><h3 id="维度表和事实表"><a href="#维度表和事实表" class="headerlink" title="维度表和事实表"></a>维度表和事实表</h3><ul><li>维度表<ul><li>一般是对事实的描述信息。 每一张维表对应现实世界中的一个对象或者概念</li><li>维表的特征<ul><li>维度表的范围很宽（具有多个属性、 列比较多）</li><li>跟事实表相比， 行数相对较小： 通常&lt; 10 万条</li><li>内容相对固定： 编码表</li></ul></li></ul></li><li>事实表<ul><li>事实表中的每行数据代表一个业务事件（ 下单、 支付、 退款、 评价等） 。 “事实” 这个术语表示的是业务事件的度量值（ 可统计次数、 个数、 件数、 金额等） ， 例如， 订单事件中的下单金额</li><li>每一个事实表的行包括： 具有可加性的数值型的度量值、 与维表相连接的外键、 通常具有两个和两个以上的外键、 外键之间表示维表之间多对多的关系（外键+度量值）</li><li>事实表的特征：<ul><li>非常的大</li><li>内容相对的窄： 列数较少</li><li>经常发生变化， 每天会新增加很多</li></ul></li></ul></li></ul><hr><h3 id="关系建模和维度建模"><a href="#关系建模和维度建模" class="headerlink" title="关系建模和维度建模"></a>关系建模和维度建模</h3><ul><li>数据处理分类<ul><li>联机事务处理 OLTP（ on-line transactionprocessing） <ul><li>保证数据一致性，避免冗余</li></ul></li><li>联机分析处理 OLAP（ On-Line Analytical Processing）</li></ul></li></ul><table><thead><tr><th style="text-align:left">对比属性</th><th style="text-align:left">OLTP</th><th style="text-align:left">OLAP</th></tr></thead><tbody><tr><td style="text-align:left">读特性</td><td style="text-align:left">每次查询只返回少量记录</td><td style="text-align:left">对大量记录进行汇总</td></tr><tr><td style="text-align:left">写特性</td><td style="text-align:left">随机、 低延时写入用户的输入</td><td style="text-align:left">批量导入</td></tr><tr><td style="text-align:left">使用场景</td><td style="text-align:left">用户， Java EE 项目</td><td style="text-align:left">内部分析师， 为决策提供支持</td></tr><tr><td style="text-align:left">数据表征</td><td style="text-align:left">最新数据状态</td><td style="text-align:left">随时间变化的历史状态</td></tr><tr><td style="text-align:left">数据规模</td><td style="text-align:left">GB</td><td style="text-align:left">TB 到 PB</td></tr></tbody></table><ul><li>维度建模<ul><li>星型模型<ul><li>标准星形只有单层级</li><li>性能优先</li><li>减少维度就是减少join、减少shuffle</li></ul></li><li>雪花模型<ul><li>多层</li><li>灵活优先</li></ul></li><li>星座模型</li></ul></li></ul><hr><h3 id="同步策略"><a href="#同步策略" class="headerlink" title="同步策略"></a>同步策略</h3><ul><li>全量表： 存储完整的数据。</li><li>增量表： 存储新增加的数据。</li><li>新增及变化表： 存储新增加的数据和变化的数据。</li><li>特殊表： 只需要存储一次</li></ul><hr><h3 id="即席查询"><a href="#即席查询" class="headerlink" title="即席查询"></a>即席查询</h3><ul><li>OLAP（Online Analytical Processing）多维分析</li><li>ROLAP（Relational OLAP）<ul><li>基于关系型数据库</li></ul></li><li>MOLAP（Multidimensional OLAP）<ul><li>需要预计算</li><li>基于多维数据集（一个多维数据集成为OLAP Cube（立方体））</li><li>Cuboid（长方体）</li></ul></li><li>Star Schema（星型模型）</li><li>Dimension（维度）</li><li>Measure（度量）</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;div class=&quot;note info&quot;&gt;&lt;/div&gt;
+    
+    </summary>
+    
+      <category term="大数据" scheme="https://ziperlee.github.io/zipee.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+    
+      <category term="数据仓库" scheme="https://ziperlee.github.io/zipee.github.io/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93/"/>
+    
+  </entry>
   
   <entry>
     <title>设计模式学习总结</title>
@@ -252,9 +296,9 @@
     </summary>
     
     
-      <category term="flask" scheme="https://ziperlee.github.io/zipee.github.io/tags/flask/"/>
-    
       <category term="python" scheme="https://ziperlee.github.io/zipee.github.io/tags/python/"/>
+    
+      <category term="flask" scheme="https://ziperlee.github.io/zipee.github.io/tags/flask/"/>
     
       <category term="源码浅析" scheme="https://ziperlee.github.io/zipee.github.io/tags/%E6%BA%90%E7%A0%81%E6%B5%85%E6%9E%90/"/>
     
@@ -376,9 +420,9 @@
       <category term="问题分析" scheme="https://ziperlee.github.io/zipee.github.io/categories/%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/"/>
     
     
-      <category term="flask" scheme="https://ziperlee.github.io/zipee.github.io/tags/flask/"/>
-    
       <category term="问题分析" scheme="https://ziperlee.github.io/zipee.github.io/tags/%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/"/>
+    
+      <category term="flask" scheme="https://ziperlee.github.io/zipee.github.io/tags/flask/"/>
     
       <category term="linux" scheme="https://ziperlee.github.io/zipee.github.io/tags/linux/"/>
     
