@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="兼职运维," />
+  <meta name="keywords" content="mybatis," />
 
 
 
@@ -81,21 +81,18 @@
 
 
 
-<meta name="description" content="今天部署生产环境遇到了坑，本文聊聊这个坑的上下文。">
-<meta name="keywords" content="兼职运维">
+<meta name="description" content="本文近记录常用的动态sql">
+<meta name="keywords" content="mybatis">
 <meta property="og:type" content="article">
-<meta property="og:title" content="兼职运维之ulimit">
-<meta property="og:url" content="https://ziperlee.github.io/zipee.github.io/2019/12/27/兼职运维之ulimit-u/index.html">
+<meta property="og:title" content="mybatis动态SQL整理">
+<meta property="og:url" content="https://ziperlee.github.io/zipee.github.io/2020/10/21/mybatis动态SQL整理/index.html">
 <meta property="og:site_name" content="Zipee&#39;s blog">
-<meta property="og:description" content="今天部署生产环境遇到了坑，本文聊聊这个坑的上下文。">
+<meta property="og:description" content="本文近记录常用的动态sql">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://i.loli.net/2019/12/27/tVroEwZsClS9b54.jpg">
-<meta property="og:image" content="https://i.loli.net/2019/12/27/4rdolfctzh18ZCE.jpg">
-<meta property="og:updated_time" content="2020-03-28T14:35:40.000Z">
+<meta property="og:updated_time" content="2020-10-21T14:07:23.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="兼职运维之ulimit">
-<meta name="twitter:description" content="今天部署生产环境遇到了坑，本文聊聊这个坑的上下文。">
-<meta name="twitter:image" content="https://i.loli.net/2019/12/27/tVroEwZsClS9b54.jpg">
+<meta name="twitter:title" content="mybatis动态SQL整理">
+<meta name="twitter:description" content="本文近记录常用的动态sql">
 
 
 
@@ -125,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="https://ziperlee.github.io/zipee.github.io/2019/12/27/兼职运维之ulimit-u/"/>
+  <link rel="canonical" href="https://ziperlee.github.io/zipee.github.io/2020/10/21/mybatis动态SQL整理/"/>
 
 
 
 
 
-  <title>兼职运维之ulimit | Zipee's blog</title>
+  <title>mybatis动态SQL整理 | Zipee's blog</title>
   
 
 
@@ -258,7 +255,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ziperlee.github.io/zipee.github.io/2019/12/27/兼职运维之ulimit-u/">
+    <link itemprop="mainEntityOfPage" href="https://ziperlee.github.io/zipee.github.io/2020/10/21/mybatis动态SQL整理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zipee">
@@ -275,7 +272,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">兼职运维之ulimit</h1>
+          <h1 class="post-title" itemprop="name headline">mybatis动态SQL整理</h1>
         
 
         <div class="post-meta">
@@ -287,8 +284,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-27T21:09:45+08:00">
-                2019-12-27
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-10-21T21:59:41+08:00">
+                2020-10-21
               </time>
             
 
@@ -310,8 +307,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
                   </a>
                 </span>
 
@@ -352,31 +349,148 @@
       
 
       
-        <div class="note info"><p>今天部署生产环境遇到了坑，本文聊聊这个坑的上下文。</p></div>
+        <div class="note info"><p>本文近记录常用的动态sql</p></div>
 <a id="more"></a>
-<h2 id="现象-amp-定位"><a href="#现象-amp-定位" class="headerlink" title="现象&amp;定位"></a>现象&amp;定位</h2><ul>
-<li>部署完成后，收到测试人员反馈业务运行异常</li>
-<li><p>排查后，定位为livy向spark提交任务时执行失败<br>livy日志如下：<br><img src="https://i.loli.net/2019/12/27/tVroEwZsClS9b54.jpg" alt="spark异常.jpg"></p>
-</li>
-<li><p>初看有点懵，将关键字<code>spark</code>和<code>OpenBLAS blas_thread_init</code>提交google，结果大多匹配python运行时相关异常，<br><img src="https://i.loli.net/2019/12/27/4rdolfctzh18ZCE.jpg" alt="spark异常google.jpg"></p>
-</li>
-<li><p>仔细看不难发现<code>RLIMIT_NPROC 4096 current, 514476 max</code></p>
-</li>
-<li>由此自然联想到<code>ulimit -u</code>，一查发现果然只有4096</li>
-</ul>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><ul>
-<li>解决方案也简单，设置系统最大允许进程数</li>
-</ul>
-<p><strong>永久生效：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/etc/security/limits.d/90-nproc.conf</span><br><span class="line">或</span><br><span class="line">/etc/security/limits.conf</span><br><span class="line">在末行加入</span><br><span class="line">* hard nproc 1000000</span><br><span class="line">* soft nproc 1000000</span><br></pre></td></tr></table></figure>
-<p><strong>当前session生效：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ulimit -u 1000000</span><br></pre></td></tr></table></figure>
 <ul>
-<li>重新测试，问题果然修复</li>
+<li>表达式规则基于OGNL(（Object Graph Navigation Language 对象图导航语言)</li>
+<li><p>if</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;if test=&quot;id!=null&quot;&gt;</span><br><span class="line"> 	id=#&#123;id&#125;</span><br><span class="line"> &lt;/if&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>choose</p>
+<ul>
+<li>类似switch case，只会进入一个逻辑分支<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;choose&gt;</span><br><span class="line">	&lt;when test=&quot;id!=null&quot;&gt;</span><br><span class="line">		id=#&#123;id&#125;</span><br><span class="line">	&lt;/when&gt;</span><br><span class="line">	&lt;otherwise&gt;</span><br><span class="line">		gender = 0</span><br><span class="line">	&lt;/otherwise&gt;</span><br><span class="line">&lt;/choose&gt;</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
-<li>问题事后看并不复杂，但前前后后还是花了不少时间，其实之前ulimit也不是没学习过，但真正出现异常时，往往没有看透问题的本质</li>
-<li>该生产环境主机时刚部署的，毕竟兼职运维，像ulimit此类系统资源的设置没有统一的整体设置过，吃一堑长一智，兼职运维的路上且走且学吧</li>
+</li>
+<li><p>trim</p>
+<ul>
+<li>prefix=””:<ul>
+<li>前缀：trim标签体中是整个字符串拼串后的结果。prefix给拼串后的整个字符串加一个前缀</li>
+</ul>
+</li>
+<li>prefixOverrides=””<ul>
+<li>前缀覆盖：去掉整个字符串前面多余的字符</li>
+</ul>
+</li>
+<li>suffix=””<ul>
+<li>后缀suffix给拼串后的整个字符串加一个后缀 </li>
+</ul>
+</li>
+<li>suffixOverrides=””<ul>
+<li>后缀覆盖：去掉整个字符串后面多余的字符<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;trim prefix=&quot;where&quot; suffixOverrides=&quot;and&quot;&gt;</span><br><span class="line">	&lt;if test=&quot;id!=null&quot;&gt;</span><br><span class="line">		id=#&#123;id&#125; and</span><br><span class="line">	&lt;/if&gt;</span><br><span class="line">	&lt;if test=&quot;lastName!=null &amp;amp;&amp;amp; lastName!=&amp;quot;&amp;quot;&quot;&gt;</span><br><span class="line">		last_name like #&#123;lastName&#125; and</span><br><span class="line">	&lt;/if&gt;</span><br><span class="line">	&lt;!-- ognl会进行字符串与数字的转换判断  &quot;0&quot;==0 --&gt;</span><br><span class="line">	&lt;if test=&quot;gender==0 or gender==1&quot;&gt;</span><br><span class="line">	 	gender=#&#123;gender&#125;</span><br><span class="line">	&lt;/if&gt;</span><br><span class="line">&lt;/trim&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>foreach</p>
+<ul>
+<li>collection<ul>
+<li>指定要遍历的集合：list类型的参数会特殊处理封装在map中，map的key就叫list</li>
+</ul>
+</li>
+<li>item<ul>
+<li>将当前遍历出的元素赋值给指定的变量</li>
+</ul>
+</li>
+<li>separator<ul>
+<li>每个元素之间的分隔符</li>
+</ul>
+</li>
+<li>open<ul>
+<li>遍历出所有结果拼接一个开始的字符</li>
+</ul>
+</li>
+<li>close<ul>
+<li>遍历出所有结果拼接一个结束的字符</li>
+</ul>
+</li>
+<li>index<ul>
+<li>索引。遍历list的时候是index就是索引，item就是当前值。      遍历map的时候index表示的就是map的key，item就是map的值<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;foreach collection=&quot;emps&quot; item=&quot;emp&quot; separator=&quot;,&quot;&gt;</span><br><span class="line">	(#&#123;emp.lastName&#125;,#&#123;emp.email&#125;,#&#123;emp.gender&#125;,#&#123;emp.dept.id&#125;)</span><br><span class="line">&lt;/foreach&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>where</p>
+<ul>
+<li>可以自动抹除多余的and<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;where&gt;</span><br><span class="line">	&lt;if test=&quot;lastName!=null &amp;amp;&amp;amp; lastName!=&amp;quot;&amp;quot;&quot;&gt;</span><br><span class="line">		and last_name like #&#123;lastName&#125;</span><br><span class="line">	&lt;/if&gt;</span><br><span class="line">	&lt;if test=&quot;gender==0 or gender==1&quot;&gt;</span><br><span class="line">	 	and gender=#&#123;gender&#125;</span><br><span class="line">	&lt;/if&gt;</span><br><span class="line">&lt;/where&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>set</p>
+<ul>
+<li>可以自动抹除多余的“,”</li>
+<li>也可通过trim实现<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;set&gt;</span><br><span class="line">	&lt;if test=&quot;lastName!=null&quot;&gt;</span><br><span class="line">		last_name=#&#123;lastName&#125;,</span><br><span class="line">	&lt;/if&gt;</span><br><span class="line">	&lt;if test=&quot;email!=null&quot;&gt;</span><br><span class="line">		email=#&#123;email&#125;,</span><br><span class="line">	&lt;/if&gt;</span><br><span class="line">	&lt;if test=&quot;gender!=null&quot;&gt;</span><br><span class="line">		gender=#&#123;gender&#125;</span><br><span class="line">	&lt;/if&gt;</span><br><span class="line">&lt;/set&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>include</p>
+<ul>
+<li>抽取可重用的sql片段。方便后面引用 </li>
+</ul>
+<ol>
+<li>sql抽取：经常将要查询的列名，或者插入用的列名抽取出来方便引用</li>
+<li>include来引用已经抽取的sql：</li>
+<li>include还可以自定义一些property，sql标签内部就能使用自定义的属性<ul>
+<li>include-property：取值的正确方式${prop},</li>
+<li>#{不能使用这种方式}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;sql id=&quot;Base_Column_List&quot; &gt;</span><br><span class="line">    id, data_name, table_name</span><br><span class="line">&lt;/sql&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>bind</p>
+<ul>
+<li>可以将OGNL表达式的值绑定到一个变量中，方便后来引用这个变量的值<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bind name=&quot;_lastName&quot; value=&quot;&apos;%&apos;+lastName+&apos;%&apos;&quot;/&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="批量保存"><a href="#批量保存" class="headerlink" title="批量保存"></a>批量保存</h3><ul>
+<li><p>MySQL</p>
+<ul>
+<li><p>foreach遍历，mysql支持values(),(),()语法</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;insert id=&quot;addEmps&quot;&gt;</span><br><span class="line"> 	insert into tbl_employee(</span><br><span class="line"> 		&lt;include refid=&quot;insertColumn&quot;&gt;&lt;/include&gt;</span><br><span class="line"> 	) </span><br><span class="line">	values</span><br><span class="line">	&lt;foreach collection=&quot;emps&quot; item=&quot;emp&quot; separator=&quot;,&quot;&gt;</span><br><span class="line">		(#&#123;emp.lastName&#125;,#&#123;emp.email&#125;,#&#123;emp.gender&#125;,#&#123;emp.dept.id&#125;)</span><br><span class="line">	&lt;/foreach&gt;</span><br><span class="line"> &lt;/insert&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>多insert拼接</p>
+<ul>
+<li>==这种方式需要数据库连接属性allowMultiQueries=true，这种分号分隔多个sql可以用于其他的批量操作（删除，修改）==<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;foreach collection=&quot;emps&quot; item=&quot;emp&quot; separator=&quot;;&quot;&gt;</span><br><span class="line">	insert into tbl_employee(last_name,email,gender,d_id)</span><br><span class="line">	values(#&#123;emp.lastName&#125;,#&#123;emp.email&#125;,#&#123;emp.gender&#125;,#&#123;emp.dept.id&#125;)</span><br><span class="line">&lt;/foreach&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Oracle</p>
+<ul>
+<li>Oracle不支持values(),(),()</li>
+</ul>
+<ol>
+<li><p>多个insert放在begin - end里面</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> begin</span><br><span class="line">    insert into employees(employee_id,last_name,email) </span><br><span class="line">    values(employees_seq.nextval,&apos;test_001&apos;,&apos;test_001@atguigu.com&apos;);</span><br><span class="line">    insert into employees(employee_id,last_name,email) </span><br><span class="line">    values(employees_seq.nextval,&apos;test_002&apos;,&apos;test_002@atguigu.com&apos;);</span><br><span class="line">end;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>利用中间表</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">insert into employees(employee_id,last_name,email)</span><br><span class="line">   select employees_seq.nextval,lastName,email from(</span><br><span class="line">          select &apos;test_a_01&apos; lastName,&apos;test_a_e01&apos; email from dual</span><br><span class="line">          union</span><br><span class="line">          select &apos;test_a_02&apos; lastName,&apos;test_a_e02&apos; email from dual</span><br><span class="line">          union</span><br><span class="line">          select &apos;test_a_03&apos; lastName,&apos;test_a_e03&apos; email from dual</span><br><span class="line">   )</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h3 id="内置参数"><a href="#内置参数" class="headerlink" title="内置参数"></a>内置参数</h3><ul>
+<li>不只是方法传递过来的参数</li>
+<li>可以被用来判断，取值</li>
+<li><p>_parameter（代表整个参数）</p>
+<ul>
+<li>单个参数：_parameter就是这个参数</li>
+<li>多个参数：参数会被封装为一个map；_parameter就是代表这个map</li>
+</ul>
+</li>
+<li><p>_databaseId（如果配置了databaseIdProvider标签）</p>
+<ul>
+<li>_databaseId就是代表当前数据库的别名oracle</li>
+</ul>
+</li>
 </ul>
 
       
@@ -430,7 +544,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/兼职运维/" rel="tag"># 兼职运维</a>
+            <a href="/tags/mybatis/" rel="tag"># mybatis</a>
           
         </div>
       
@@ -443,8 +557,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/12/23/fabric使用总结/" rel="next" title="fabric使用总结">
-                <i class="fa fa-chevron-left"></i> fabric使用总结
+              <a href="/2020/10/10/数据仓库构建思考/" rel="next" title="数据仓库构建思考">
+                <i class="fa fa-chevron-left"></i> 数据仓库构建思考
               </a>
             
           </div>
@@ -452,10 +566,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/01/13/shell编码整理/" rel="prev" title="shell编码整理">
-                shell编码整理 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -622,7 +732,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#现象-amp-定位"><span class="nav-number">1.</span> <span class="nav-text">现象&amp;定位</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方案"><span class="nav-number">2.</span> <span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#批量保存"><span class="nav-number">1.</span> <span class="nav-text">批量保存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内置参数"><span class="nav-number">2.</span> <span class="nav-text">内置参数</span></a></li></ol></div>
             
 
           </div>
