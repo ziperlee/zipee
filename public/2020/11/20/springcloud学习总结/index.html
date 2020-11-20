@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="数据仓库," />
+  <meta name="keywords" content="spring cloud," />
 
 
 
@@ -81,18 +81,18 @@
 
 
 
-<meta name="keywords" content="数据仓库">
+<meta name="description" content="微服务当道，咱也不能落下">
+<meta name="keywords" content="spring cloud">
 <meta property="og:type" content="article">
-<meta property="og:title" content="数据仓库构建思考">
-<meta property="og:url" content="https://ziperlee.github.io/zipee.github.io/2020/10/10/数据仓库构建思考/index.html">
+<meta property="og:title" content="springcloud学习总结">
+<meta property="og:url" content="https://ziperlee.github.io/zipee.github.io/2020/11/20/springcloud学习总结/index.html">
 <meta property="og:site_name" content="Zipee&#39;s blog">
+<meta property="og:description" content="微服务当道，咱也不能落下">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://i.loli.net/2020/10/09/b8wS91HZ5FMmfUz.jpg">
-<meta property="og:image" content="https://i.loli.net/2020/09/14/Vu9RqIvoZ81wfKt.jpg">
-<meta property="og:updated_time" content="2020-10-10T08:07:45.000Z">
+<meta property="og:updated_time" content="2020-11-20T13:09:24.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="数据仓库构建思考">
-<meta name="twitter:image" content="https://i.loli.net/2020/10/09/b8wS91HZ5FMmfUz.jpg">
+<meta name="twitter:title" content="springcloud学习总结">
+<meta name="twitter:description" content="微服务当道，咱也不能落下">
 
 
 
@@ -122,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="https://ziperlee.github.io/zipee.github.io/2020/10/10/数据仓库构建思考/"/>
+  <link rel="canonical" href="https://ziperlee.github.io/zipee.github.io/2020/11/20/springcloud学习总结/"/>
 
 
 
 
 
-  <title>数据仓库构建思考 | Zipee's blog</title>
+  <title>springcloud学习总结 | Zipee's blog</title>
   
 
 
@@ -255,7 +255,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ziperlee.github.io/zipee.github.io/2020/10/10/数据仓库构建思考/">
+    <link itemprop="mainEntityOfPage" href="https://ziperlee.github.io/zipee.github.io/2020/11/20/springcloud学习总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zipee">
@@ -272,7 +272,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">数据仓库构建思考</h1>
+          <h1 class="post-title" itemprop="name headline">springcloud学习总结</h1>
         
 
         <div class="post-meta">
@@ -284,8 +284,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-10-10T14:52:13+08:00">
-                2020-10-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-11-20T20:07:22+08:00">
+                2020-11-20
               </time>
             
 
@@ -307,8 +307,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/大数据/" itemprop="url" rel="index">
-                    <span itemprop="name">大数据</span>
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
                   </a>
                 </span>
 
@@ -349,238 +349,244 @@
       
 
       
-        <div class="note info"></div>
+        <div class="note info"><p>微服务当道，咱也不能落下</p></div>
 <a id="more"></a>
-<h3 id="项目需求"><a href="#项目需求" class="headerlink" title="项目需求"></a>项目需求</h3><ol>
-<li>数据输入<ul>
-<li>用户行为数据采集</li>
-<li>业务数据采集</li>
+<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><ul>
+<li>微服务的概念就不多说了，网上随便搜。</li>
+<li>springcloud是一个为简化微服务开发而存在的框架。</li>
+<li>在微服务架构大行其道的今天，springcloud的功能组件也是日新月异，所以这篇文章主要还是聊聊springcloud当下在各个子领域的优秀组件，希望能为理解微服务起到提纲挈领的作用。</li>
 </ul>
-</li>
-<li>数据存储<ul>
-<li>数仓分层</li>
-<li>维度建模&amp;报表指标</li>
-</ul>
-</li>
-<li>数据输出<ul>
-<li>采用即席查询进行指标分析</li>
-</ul>
-</li>
-<li>系统监控<ul>
-<li>集群性能监控&amp;异常报警</li>
-</ul>
-</li>
-<li>元数据管理</li>
-<li>质量监控</li>
-</ol>
-<h3 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h3><h4 id="1-技术选型"><a href="#1-技术选型" class="headerlink" title="1. 技术选型"></a>1. 技术选型</h4><ul>
-<li>考虑因素<ul>
-<li>数据量大小</li>
-<li>业务需求（用户数据、业务数据）</li>
-<li>行业内经验（避免走弯路，借鉴）</li>
-<li>技术成熟度</li>
-<li>开发维护成本（CDH版本等）</li>
-<li>总成本预算</li>
-</ul>
-</li>
-<li>数据采集传输<ul>
-<li>Flume<ul>
-<li>擅长读取日志文件</li>
-<li>相较于Logstash，行业内使用Flume更多</li>
-</ul>
-</li>
-<li>Kafka<ul>
-<li>削峰</li>
-</ul>
-</li>
-<li>Sqoop<ul>
-<li>转换mysql</li>
-</ul>
-</li>
-<li>Logstash<ul>
-<li>没有大数据的公司专门用来处理日志</li>
-</ul>
-</li>
-<li>DataX<ul>
-<li>和Sqoop市场占有率 50%:50%</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>数据存储<ul>
-<li>MySql</li>
-<li>HDFS</li>
-<li>HBase<ul>
-<li>快速插入</li>
-</ul>
-</li>
-<li>Redis</li>
-<li>MongoDB<ul>
-<li>爬虫数据</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>数据计算<ul>
-<li>Hive</li>
-<li>Tez<ul>
-<li>基于内存</li>
-</ul>
-</li>
-<li>Spark</li>
-<li>Flink</li>
-<li><del>Storm</del><ul>
-<li>没落，淘汰</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>数据查询</p>
+<hr>
+<h3 id="功能组件"><a href="#功能组件" class="headerlink" title="功能组件"></a>功能组件</h3><ul>
+<li><p>服务注册中心</p>
 <ul>
-<li>Presto<ul>
-<li>快速查询，支持多数据源</li>
-<li>若是apache则选择</li>
-</ul>
-</li>
-<li>Druid</li>
-<li>Impala<ul>
-<li>Presto的竞品</li>
-<li>cdh优先选择</li>
-</ul>
-</li>
-<li><p>Kylin</p>
+<li><p>Netflix Eureka（停更）</p>
 <ul>
-<li>多维查询，聚合</li>
-</ul>
-<p><img src="https://i.loli.net/2020/10/09/b8wS91HZ5FMmfUz.jpg" alt="20201009102131.jpg"></p>
-</li>
-</ul>
-</li>
-<li>数据可视化<ul>
-<li>Echarts<ul>
-<li>百度开源，开发要求较高</li>
-</ul>
-</li>
-<li>Superset<ul>
-<li>难度低</li>
-</ul>
-</li>
-<li>QuickBI<ul>
-<li>离线指标，阿里开源，收费</li>
-</ul>
-</li>
-<li>DataV<ul>
-<li>可视化大屏，阿里开源，收费</li>
+<li>CAP的AP</li>
+<li>如果 Eureka 服务器检测到超过预期数量的注册客户端以一种不优雅的方式终止了连接，并且同时正在等待被驱逐，那么它们将进入自我保护模式。这样做是为了确保灾难性网络事件不会擦除eureka注册表数据，并将其向下传播到所有客户端<ul>
+<li>任何客户端，如果连续3次心跳更新失败，那么它将被视为非正常终止，client将被剔除。当超过当前注册实例15%的客户端都处于这种状态，那么自我保护将被开启</li>
+<li>当自我保护开启以后，eureka服务器将停止剔除所有实例，直到<ul>
+<li>它看到的心跳续借的数量回到了预期的阈值之上</li>
+<li>自我保护被禁用</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>任务调度<ul>
-<li>Azkaban<ul>
-<li>简单实用</li>
 </ul>
 </li>
-<li>Oozie<ul>
-<li>功能多</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>集群监控</p>
+<li><p>Zookeeper</p>
 <ul>
-<li>Zabbix</li>
-<li>Prometheus（没有历史包袱的建议选择）</li>
+<li>CAP的AP</li>
 </ul>
 </li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>Zabbix</th>
-<th>Prometheus</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>后端用 C 开发，界面用 PHP 开发，定制化难度很高。</td>
-<td>后端用 golang 开发，前端是 Grafana，JSON 编辑即可解决。定制化难度较低。</td>
-</tr>
-<tr>
-<td>集群规模上限为 10000 个节点。</td>
-<td>支持更大的集群规模，速度也更快。</td>
-</tr>
-<tr>
-<td>更适合监控物理机环境。</td>
-<td>更适合云环境的监控，对 OpenStack，Kubernetes 有更好的集成。</td>
-</tr>
-<tr>
-<td>监控数据存储在关系型数据库内，如 MySQL，很难从现有数据中扩展维度。</td>
-<td>监控数据存储在基于时间序列的数据库内，便于对已有数据进行新的聚合。</td>
-</tr>
-<tr>
-<td>安装简单，zabbix-server 一个软件包中包括了所有的服务端功能。</td>
-<td>安装相对复杂，监控、告警和界面都分属于不同的组件。</td>
-</tr>
-<tr>
-<td>图形化界面比较成熟，界面上基本上能完成全部的配置操作。</td>
-<td>界面相对较弱，很多配置需要修改配置文件。</td>
-</tr>
-<tr>
-<td>发展时间更长，对于很多监控场景，都有现成的解决方案。</td>
-<td>2015 年后开始快速发展，但发展时间较短，成熟度不及 Zabbix。</td>
-</tr>
-</tbody>
-</table>
+<li><p>Consul</p>
 <ul>
-<li>元数据管理<ul>
-<li>Atlas</li>
+<li><p>CAP的AP</p>
+</li>
+<li><p>功能</p>
+<ul>
+<li>服务发现<ul>
+<li>提供HTTP和DNS两种发现方式</li>
 </ul>
 </li>
-<li>数据质量监控<ul>
-<li>Griffin</li>
-<li>Shell</li>
-<li>Python</li>
+<li>健康监测<ul>
+<li>支持多种协议，HTTP、TCP、Docker、Shell脚本定制化</li>
+</ul>
+</li>
+<li>KV存储<ul>
+<li>key , Value的存储方式</li>
+</ul>
+</li>
+<li>多数据中心<ul>
+<li>Consul支持多数据中心</li>
+</ul>
+</li>
+<li>可视化Web界面    </li>
+</ul>
+</li>
+<li><p>容器启动</p>
+<figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="keyword">run</span><span class="bash"> -d -p 8500:8500 -v /home/consul:/consul/data -e CONSUL_BIND_INTERFACE=<span class="string">'eth0'</span> --name=consul1 consul agent -server -bootstrap -ui -client=<span class="string">'0.0.0.0'</span></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>agent: 表示启动 agent 进程</li>
+<li>server: 表示 consul 为 server 模式</li>
+<li>client: 表示 consul 为 client 模式</li>
+<li>bootstrap: 表示这个节点是 Server-Leader</li>
+<li>ui: 启动 Web UI, 默认端口 8500</li>
+<li>node: 指定节点名称, 集群中节点名称唯一</li>
+<li>client: 绑定客户端接口地址, 0.0.0.0表示所有地址都可以访问</li>
 </ul>
 </li>
 </ul>
-<h4 id="2-框架版本选择"><a href="#2-框架版本选择" class="headerlink" title="2. 框架版本选择"></a>2. 框架版本选择</h4><ul>
-<li>Apache<ul>
-<li>灵活，操作难度高</li>
-<li>无管理工具</li>
-</ul>
 </li>
-<li>CDH<ul>
-<li>管理工具，Cloudera Manager（闭源）</li>
-<li>操作简单，但由于Cloudera不在维护免费版，故不推荐</li>
-</ul>
-</li>
-<li>HDP<ul>
-<li>管理工具，Ambari（开源）</li>
+<li><p>Nacos（推荐）</p>
+<ul>
+<li>支持AP和CP切换<ul>
+<li>一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台</li>
 </ul>
 </li>
 </ul>
-<h4 id="3-服务器使用物理机or云主机"><a href="#3-服务器使用物理机or云主机" class="headerlink" title="3. 服务器使用物理机or云主机"></a>3. 服务器使用物理机or云主机</h4><ul>
-<li>预算充足 + 专业运维 = 物理机</li>
-<li>预算不足 | 短期产品开发迭代 | 无专业运维 = 云主机</li>
+</li>
 </ul>
-<h4 id="4-如何确认集群规模（假设：每台服务器8T磁盘，128G内存）"><a href="#4-如何确认集群规模（假设：每台服务器8T磁盘，128G内存）" class="headerlink" title="4. 如何确认集群规模（假设：每台服务器8T磁盘，128G内存）"></a>4. 如何确认集群规模（假设：每台服务器8T磁盘，128G内存）</h4><ol>
-<li>假设每天日活100W，每人一天平均100条数据：100W*100=1亿条</li>
-<li>每条日志1K，每天1亿条：1亿/1024/1024=100G</li>
-<li>半年内不扩容服务器来算：100G*180天=18T</li>
-<li>保存3副本：18T*3=54T</li>
-<li>预留20%～30%=54T/0.7=77T</li>
-<li>77T/8=10台服务器</li>
-<li>如果考虑数仓分层，采用数据压缩，需另行计算</li>
-</ol>
-<h3 id="集群服务器规划原则"><a href="#集群服务器规划原则" class="headerlink" title="集群服务器规划原则"></a>集群服务器规划原则</h3><ul>
-<li>hdfs namenode 和 yarn resource manager分开</li>
-<li>服务间通讯紧密放一起</li>
-<li>服务内存资源占用多的分开</li>
+</li>
+<li><p>客服端负载均衡</p>
+<ul>
+<li>Netflix Ribbon（将停更）<ul>
+<li>nginx是集中式LB</li>
+<li>ribbon是进程内，会在注册中心获取注册信息服务列表缓存到JVM，从而在本地实现RPC远程服务调用</li>
+<li>ribbon = 负载均衡 + RestTemplate</li>
 </ul>
-<h3 id="架构图"><a href="#架构图" class="headerlink" title="架构图"></a>架构图</h3><ul>
-<li>Zabbix换成Prometheus</li>
+</li>
+<li>LoadBalancer</li>
 </ul>
-<p><img src="https://i.loli.net/2020/09/14/Vu9RqIvoZ81wfKt.jpg" alt="20200914174642.jpg"></p>
+</li>
+<li><p>服务调用</p>
+<ul>
+<li>Netflix Feign（将停更）<ul>
+<li>springcloud在feign的基础上开发</li>
+<li>feign是一个服务调用框架，集成了ribbon</li>
+<li>只需要定义服务绑定接口且以声明式的方法，优雅简单的实现服务调用</li>
+</ul>
+</li>
+<li>OpenFeign<ul>
+<li>Feign的接班人</li>
+<li>使用<ul>
+<li>微服务接口 + 业务类@FeignClient + 主启动@EnableFeignClients（优雅如dubbo）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>服务降级</p>
+<ul>
+<li>Netflix Hystrix（将停更）<ul>
+<li>服务降级 fallback<ul>
+<li>可以在服务端和客户端实现，一般在客户端实现</li>
+<li>触发场景<ul>
+<li>程序运行异常</li>
+<li>超时</li>
+<li>服务熔断触发服务降级</li>
+<li>线程池/信号量打满也会导致服务降级</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>服务限流 flowlimit</li>
+<li>服务熔断 break <ul>
+<li>触发场景<ul>
+<li>流量过大</li>
+</ul>
+</li>
+<li>处理过程<ul>
+<li>降级、熔断、恢复</li>
+</ul>
+</li>
+<li>熔断类型<ul>
+<li>熔断打开<ul>
+<li>请求不再进行调用当前服务，内部设置时钟一般为MTTR(平均故障处理时间)，当打开时长达到所设时钟则进入熔断状态</li>
+</ul>
+</li>
+<li>熔断关闭<ul>
+<li>熔断关闭不会对服务进行熔断</li>
+</ul>
+</li>
+<li>熔断半开<ul>
+<li>部分请求根据规则调用当前服务，如果请求成功且符合规则则认为当前服务恢复正常，关闭熔断</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>断路器开启或者关闭的条件<ul>
+<li>当满足一定阀值的时候（默认10秒内超过20个请求次数）</li>
+<li>当失败率达到一定的时候（默认10秒内超过50%请求失败）</li>
+<li>到达以上阀值，断路器将会开启</li>
+<li>当开启的时候，所有请求都不会进行转发</li>
+<li>一段时间之后（默认是5秒），这个时候断路器是半开状态，会让其中一个请求进行转发。如果成功，断路器会关闭，若失败，继续开启。重复4和5</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>resilience4j（国外较多）</li>
+<li>sentienl（推荐）<ul>
+<li>把流量作为切入点，从流量控制、熔断降级、系统负载保护等多个维度保护服务的稳定性</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>服务网关</p>
+<ul>
+<li>Netflix Zuul（将停更）</li>
+<li>Zuul2</li>
+<li>gateway（推荐）<ul>
+<li>Spring Cloud Gateway 使用的Webflux中的reactor-netty响应式编程组件，底层使用了Netty通讯框架</li>
+<li>使用场景<ul>
+<li>反向代理</li>
+<li>鉴权</li>
+<li>流量控制</li>
+<li>熔断</li>
+<li>日志监控</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>服务配置</p>
+<ul>
+<li>Spring Cloud Config</li>
+<li>Nacos（推荐）</li>
+</ul>
+</li>
+<li><p>服务总线</p>
+<ul>
+<li><p>springcloud stream </p>
+<ul>
+<li>屏蔽底层消息中间件的差异，降低切换版本，统一消息的编程模型</li>
+</ul>
+</li>
+<li><p>springcloud bus</p>
+<ul>
+<li>当前仅支持消息代理rabbitmq、kafka</li>
+<li>配合springcloud config实现配置自动刷新</li>
+</ul>
+</li>
+<li>Nacos</li>
+</ul>
+</li>
+<li><p>链路追踪</p>
+<ul>
+<li><p>sleuth</p>
+<ul>
+<li>收集整理分布式链路数据</li>
+<li>结合zippkin使用</li>
+</ul>
+</li>
+<li><p>zippkin</p>
+<ul>
+<li><p>展示分布式链路数据</p>
+</li>
+<li><p>docker启动</p>
+<figure class="highlight plain"><figcaption><span>c</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 9411:9411 openzipkin/zipkin</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>分布式事务</p>
+<ul>
+<li>seata<ul>
+<li>一个易于使用的高性能微服务分布式事务解决方案</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li>可以看出随着Netflix大部分组件的停更，springcloud也出现大换血，当随之出现了设计理念更加先进的springcloud alibaba，其涵盖了前者大部分的功能点，短短几年时间，springcloud的新老交替，更新迭代不可谓不快，但生命不息，学习不止，这便是程序员的宿命啊。</li>
+</ul>
 
       
     </div>
@@ -633,7 +639,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/数据仓库/" rel="tag"># 数据仓库</a>
+            <a href="/tags/spring-cloud/" rel="tag"># spring cloud</a>
           
         </div>
       
@@ -646,8 +652,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/10/10/数据仓库概念总结/" rel="next" title="数据仓库概念总结">
-                <i class="fa fa-chevron-left"></i> 数据仓库概念总结
+              <a href="/2020/10/26/spring5框架学习总结/" rel="next" title="spring5框架学习总结">
+                <i class="fa fa-chevron-left"></i> spring5框架学习总结
               </a>
             
           </div>
@@ -655,10 +661,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/10/21/mybatis动态SQL整理/" rel="prev" title="mybatis动态SQL整理">
-                mybatis动态SQL整理 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -825,7 +827,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#项目需求"><span class="nav-number">1.</span> <span class="nav-text">项目需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#思考题"><span class="nav-number">2.</span> <span class="nav-text">思考题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-技术选型"><span class="nav-number">2.1.</span> <span class="nav-text">1. 技术选型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-框架版本选择"><span class="nav-number">2.2.</span> <span class="nav-text">2. 框架版本选择</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-服务器使用物理机or云主机"><span class="nav-number">2.3.</span> <span class="nav-text">3. 服务器使用物理机or云主机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-如何确认集群规模（假设：每台服务器8T磁盘，128G内存）"><span class="nav-number">2.4.</span> <span class="nav-text">4. 如何确认集群规模（假设：每台服务器8T磁盘，128G内存）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集群服务器规划原则"><span class="nav-number">3.</span> <span class="nav-text">集群服务器规划原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#架构图"><span class="nav-number">4.</span> <span class="nav-text">架构图</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#功能组件"><span class="nav-number">2.</span> <span class="nav-text">功能组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>
